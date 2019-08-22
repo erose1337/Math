@@ -1,0 +1,45 @@
+Information
+===========
+- (Input)
+- A series of points
+- A vector of numbers
+
+
+Concept
+=======
+- (Data)
+- A set of:
+    - An Identifier
+    - (Identifier, Concept/Information) tuples
+    - Input port
+        - On input:
+            - read an (Identifier, Concept/Information) tuple from input port
+            - set Concept[Identifier] = Concept/Information
+    - Output port(s)
+        - on output:
+            - write an (Identifier, Concept/Information) tuple to output port
+
+
+Inference
+=========
+- (Processing)
+- A set of rules to be applied to a set of concepts
+   - "Applied":
+        - point rules output port to concepts input port
+        - write (Identifier, Concept/Information) tuples to rules input port
+        - collect output on port determined by rule
+
+    Rule
+    ----
+    - (Instruction)
+    - Concept where input identifier is associated with output Concept/Information
+        - Mapping from sets of numbers to sets of numbers
+    - Rules modify concepts while preserving correctness of relations between concepts
+        - "relations" means some invariant
+    - If a contradiction (broken invariant) is found, then some concept used in the process was False
+
+
+Action
+======
+- (Output)
+- Write a point to an output port

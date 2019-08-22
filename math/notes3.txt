@@ -1,0 +1,983 @@
+x^1 + y^1 = z^1
+(a - b) + 2b = a + b
+y = 2b
+
+x^2 + y^2 = z^2
+(a - b)(a - b) + y^2 = (a + b)(a + b)
+aa - 2ab + bb + y^2 = aa + 2ab + bb
+y^2 = 4ab
+y = 2 * sqrt(ab)
+
+x^3 + y^3 = z^3
+(a - b)(a - b)(a - b) + y^3 = (a + b)(a + b)(a + b)
+(aa - 2ab + bb)(a - b) + y^3 = (aa + 2ab + bb)(a + b)
+aaa - 2aab + abb - aab + 2abb - bbb + y^3 = aaa + 2aab + abb + aab + 2abb + bbb
+aaa - 3aab + 3abb - bbb + y^3 = aaa + 3aab + 3abb + bbb
+y^3 = 6aab + 6abb + 2bbb
+      cuberoot(6) and cuberoot(2) have no solution in naturals/integers
+      no solution exists
+
+aaa - 3aab + 3abb - bbb + y^3 = aaa + 3aab + 3abb + bbb
+-3aab + 3abb - bbb + y^3 = 3aab + 3abb + bbb
+-3aab + 3abb + y^3 = 3aab + 3abb + 2bbb
+3abb + y^3 = 6aab + 3abb + 2bbb
+y^3 = 6aab + 2bbb
+y^3 = 6aab + 6abb + 2bbb
+inconsistent
+
+
+(aaa - 3aab + 3abb - bbb)(a - b) + y^4 = (aaa + 3aab + 3abb + bbb)(a + b)
+aaaa - 3aaab + 3aabb - abbb - aaab + 3aabb - 3abbb + bbbb + y^4 = aaaa + 3aaab + 3aabb + abbb + aaab + 3aabb + 3abbb + bbbb
+aaaa - 4aaab + 6aabb - 4abbb + bbbb + y^4 = aaaa + 4aaab + 6aabb + 4abbb + bbbb
+y^4 = 8aaab + 8abbb
+      fourth root(8) has no solution in naturals/integers
+
+aaaa - 4aaab + 6aabb - 4abbb + bbbb + y^4 = aaaa + 4aaab + 6aabb + 4abbb + bbbb
+-4aaab + 6aabb - 4abbb + bbbb + y^4 = 4aaab + 6aabb + 4abbb + bbbb
+6aabb - 4abbb + bbbb + y^4 = 8aaab + 6aabb + 4abbb + bbbb
+-4abbb + bbbb + y^4 = 8aaab + 4abbb + bbbb
+-4abbb + y^4 = 8aaab + 4abbb
+y^4 = 8aaab + 8abbb
+
+
+
+
+
+for primes p > 3:
+    p mod 3 == 1 or 2
+      1 * 1 = 1	  ->	0 xor 0 = 0
+      1 * 2 = 2   ->	0 xor 1 = 1
+      2 * 1 = 2	  ->	1 xor 0 = 1
+      2 * 2 = 1	  ->	1 xor 1 = 0
+
+    p mod 6 == 1 or 5
+      1 * 1 = 1	  ->	0 xor 0 = 0
+      1 * 5 = 5	  ->	0 xor 1 = 1
+      5 * 1 = 5	  ->	1 xor 0 = 1
+      5 * 5 = 1	  ->	1 xor 1 = 0
+
+
+for primes p > 2:
+    p mod 4 == 1 or 3
+      1 * 1 = 1	  ->	0 xor 0 = 0
+      1 * 3 = 3   ->	0 xor 1 = 1
+      3 * 1 = 3	  ->	1 xor 0 = 1
+      3 * 3 = 1	  ->	1 xor 1 = 0
+
+
+for primes p > 2:
+    p mod 8 == 1, 3, 5, 7
+    denote by 0 an element on the left half of 1, 3, 5, 7 (i.e. 1, 3)
+    denote by 1 an element on the rigth half of 1, 3, 5, 7 (i.e. 5, 7)
+
+    1 * 1 = 1   ->   0 xor 0 = 0
+    1 * 3 = 3	->   0 xor 0 = 0
+    1 * 5 = 5	->   0 xor 1 = 1
+    1 * 7 = 7	->   0 xor 1 = 1
+
+    3 * 1 = 3	->   0 xor 0 = 0
+    3 * 3 = 1	->   0 xor 0 = 0
+    3 * 5 = 7	->   0 xor 1 = 1
+    3 * 7 = 5	->   0 xor 1 = 1
+
+    5 * 1 = 5	->   1 xor 0 = 1
+    5 * 3 = 7	->   1 xor 0 = 1
+    5 * 5 = 1	->   1 xor 1 = 0
+    5 * 7 = 3	->   1 xor 1 = 0
+
+    7 * 1 = 7	->   1 xor 0 = 1
+    7 * 3 = 5	->   1 xor 0 = 1
+    7 * 5 = 3	->   1 xor 1 = 0
+    7 * 7 = 1	->   1 xor 1 = 0
+
+
+
+
+
+make a program that finds a function that generates/approximates a given line
+f(x) = c # constant
+f(x) = xn # linear
+f(x) = x^2 # square
+f(x) = x^3 # cubic
+...
+f(x) = x^n # power
+f(x) = x^x
+f(x) = x! # factorial
+f(x) = (x^2 + x)/2 # triangular sum
+f(x) =      # n-gon sum
+f(x) = x^n + x
+
+check for additive constant terms
+      - moves 0 point
+      	- only only if function crosses x-axis once
+take logarithm of samples and re-test
+compute gcd of differences between samples to check for linear function
+accuracy test:
+	 - sort the input samples
+	 - compute distance between candidate approximation and input
+	   - look at range, median, average of distances
+
+
+
+
+
+
+
+a, b, c, d ...
+
+1, 2, 3, 4, ... difference of 1 (second order difference of 0)
+1, 3, 5, 7, ... difference of n (second order difference of 0)
+
+1, 4, 9, 16, ... difference of 3, 5, 7
+                 second-order difference of 2
+                 third-order difference of 0
+
+1, 8, 27, 64, 125, 216, ... difference of 7, 19, 37, 61, 91
+                            second-order difference of 12, 18, 24, 30
+                            third-order difference of 6
+                            fourth-order difference of 0
+
+1, 16, 81, 256, 625, 1296, 2401, 4096, ...
+difference of 15, 65, 175, 369, 671, 1105, 1695, ...
+second-order difference of 50, 110, 194, 302, 434, 590, ...
+third-order difference of 60, 84, 108, 132, 156, 180, ...
+fourth-order difference of 24
+fifth-order difference of 0
+
+
+for f(x) -> x^n, the n-th order difference of the output space will be n!
+                 the n+1-th order difference of the output space will be 0
+
+   (x - 1)^2 + (x - 1)
+n! ------------------- + x - 1 + 1
+           2
+
+   xx - 2x + 1 + x - 1
+n! ------------------- + x
+           2
+
+
+   xx - x
+n! ------ + x = x^n (n = 2)
+     2
+
+
+
+            6       6       6                   n!
+
+  6     12      18      24      30              in!
+
+                                                      i^2 + i
+    7       19      37      61      91          1 + n!------
+                                                        2
+
+1       8       27      64      125     216
+
+          i^2 + i
+1 + 1 + n!--------
+            2
+
+
+1 + n!((i^2 + i) / 2) + 1 + n!((i^2 + i) / 2)
+
+   x          i^2 + i
+sigma(1 + n!----------)
+  i=0            2
+
+
+      x      i^2 + i
+x + sigma(n!---------)
+     i=0        2
+
+         x    i^2 + i
+x + n!(sigma(--------))
+        i=0      2
+
+
+
+1^2 + 1 + 2^2 + 2 + 3^2 + 3 + ... x^2 + x
+1^2 + 2^2 + 3^2 + ... + x^2 + 1 + 2 + 3 + ... x
+1^2 + 2^2 + 3^2 + ... + x^2 + ((x^2 + x) / 2)
+? + ((x^2 + x) / 2)
+from https://en.wikipedia.org/wiki/Square_number: x(x + 1)(2x + 1)
+                                                   --------------
+                                                          6
+
+(x^2 + x)(2x + 1)
+2x^3 + x^2 + 2x^2 + x
+2x^3 + 3x^2 + x
+
+
+2x^3 + 3x^2 + x    x^2 + x
+--------------- + ----------
+      6               2
+
+
+
+               0
+            0 0 0 0
+       0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+
+0 0 0 0 0            5 * 1
+
+
+
+0 0                  7 * 2
+0 0
+0 0
+0 0
+0 0
+0 0
+0 0
+
+
+0 0 0 0 0 0           5 * 6
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+
+
+0 0 0 0 0 0 0 0 0 0 0  5 * 11
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+
+
+
+
+            2
+
+solve a subset sum problem by ignoring all but the x most significant bits
+
+
+
+from symbols to meaning:
+n! = number of arrangements, product of numbers up to n
+
+x^2 + x
+------- = triangular sum, sum of numbers up to x
+   2
+
+
+sqrt(a^2 + b^2 + ... c^2) = distance from zero
+
+
+
+
+
+
+
+x                       1!
+x * (x - 1)             2!
+x * (x - 1) * (x - 2)   3!
+...
+
+x! = x * (x - 1)!
+   = x * (x - 1) * (x - 2)!
+   = x * (x - 1) * (x - 2) * ... (x - x)
+
+1!    x = 1
+x                       x^x                 x = x * (x - 1)!     #0! = 1
+
+2!    x = 2
+x^2 - x                 x^x - x^(x - 1)     x = x * (x - 1)!
+
+3!    x = 3
+x * (x - 1)
+x^2 - x
+
+4! x = 4
+x * (x - 1) * (x - 2)
+(x^2 - x) * (x - 2)
+x^3 - 2x - x^2 + 2x
+x^3 - x^2
+
+5! x = 5
+x * (x - 1) * (x - 2) * (x - 3)
+(x^2 - x) * (x^2 - 3x - 2x + 6)
+(x^2 - x) * (x^2 - 5x + 6)
+x^4 - 5x^3 + 6x^2 - x^3 + 5x^2 - 6x
+x^4 - 6x^3 + 11x^2 - 6x
+
+6! x = 6
+
+
+
+n = pq, p < q
+gcd(n! / n^y, n) == p
+
+n! = p^x * q^y * z
+if p < q, then x > y
+
+            p^x * q^y * z       p^x * q^y * z
+n! / n^y = --------------- == --------------- = p^(x-y) * 1 * z = p^k * z
+                n^y               p^y*q^y
+gcd(p^k * z, pq) = p
+
+
+6 = 2 * 3
+gcd(6! / 6^2, 6) == 2
+6! = 2 * 3 * 4 * 5 * 6 = 2 * 3 * 2^2 * 5 * 2 * 3
+                       = 2^4 * 3^2 * 5
+2^4 * 3^2 * 5
+------------- = 2^2 * 5
+  (2 * 3)^2
+
+gcd(2^2 * 5, 2 * 3) = 2
+
+f(n) = sqrt(n)! mod n
+p = gcd(f(n) / n^k, n)
+
+
+n = pq, q > p
+k! mod n = 0 for k > q - 1
+(k! mod n) % p = 0 for k >= p - 1
+
+g^x mod n = p! mod n if g = pr
+                           ... and x = ?
+
+    if you have pr, then computing pr^x to factor n is not helpful
+        gcd(pr, n) == p
+
+
+
+
+
+
+(a - b) - (b - c)
+(a - b) + -b + c = a - 2b + c
+
+(9 - 4) - (4 - 1)
+(5) - (3)
+2
+
+(9 - 4) + -4 + 1
+(5) + 1 - 4
+6 - 4
+2
+
+(f - e) - (e - d) - (d - c) - (c - b) - (b - a)
+(f - e) - e + d - d + c - c + b - b + a
+(f - e) - e + a = f - 2e + a
+
+(36 - 25) - (25 - 16) - (16 - 9) - (9 - 4) - (4 - 1)
+11 - 9 - 7 - 5 - 3
+-13
+
+(36 - 25) - 25 + 1
+11 - 25 + 1
+-14 + 1
+-13
+
+
+(a - b) - (b - c) - ... (y - z) = a - 2b + z
+
+((e - d) - (d - c)) - ((c - b) - (b - a))
+(e - 2d + c) - (c - 2b + a)
+(e - 2d + c) - c + 2b - a
+(e - 2d + 2b - a)
+
+((25 - 16) - (16 - 9)) - ((9 - 4) - (4 - 1))
+(9 - 7) - (5 - 3)
+2 - 2
+0
+
+25 - 32 + 8 - 1
+25 - 32 + 7
+-7 + 7
+0
+
+
+
+
+(from https://en.wikipedia.org/wiki/Determinant)
+ad - bc is the determinant of
+
+    a   b
+    c   d
+
+and
+
+(a^2 + b^2) * (c^2 + d^2) = (ad - bc)^2 + (ac + bd)^2
+                                ^
+                         the same term appears here
+
+
+
+
+
+
+
+
+
+from https://en.wikipedia.org/wiki/Divisor_function:
+As an example, for two distinct primes p and q with p < q, let
+
+{\displaystyle n=pq.\,}
+Then
+
+{\displaystyle \sigma (n)=(p+1)(q+1)=n+1+(p+q),\,}
+{\displaystyle \varphi (n)=(p-1)(q-1)=n+1-(p+q),\,}
+and
+
+{\displaystyle n+1=(\sigma (n)+\varphi (n))/2,\,}
+{\displaystyle p+q=(\sigma (n)-\varphi (n))/2,\,}
+where {\displaystyle \varphi (n)}  is Euler's totient function.
+
+Then, the roots of:
+
+{\displaystyle (x-p)(x-q)=x^{2}-(p+q)x+n=x^{2}-[(\sigma (n)-\varphi (n))/2]x+[(\sigma (n)+\varphi (n))/2-1]=0\,}
+allow us to express p and q in terms of σ(n) and φ(n) only, without even knowing n or p+q, as:
+
+{\displaystyle p=(\sigma (n)-\varphi (n))/4-{\sqrt {[(\sigma (n)-\varphi (n))/4]^{2}-[(\sigma (n)+\varphi (n))/2-1]}},\,}
+{\displaystyle q=(\sigma (n)-\varphi (n))/4+{\sqrt {[(\sigma (n)-\varphi (n))/4]^{2}-[(\sigma (n)+\varphi (n))/2-1]}}.\,}
+Also, knowing n and either {\displaystyle \sigma (n)}  or {\displaystyle \varphi (n)}  (or knowing p+q and either {\displaystyle \sigma (n)}  or {\displaystyle \varphi (n)} ) allows us to easily find p and q.
+
+In 1984, Roger Heath-Brown proved that the equality
+
+{\displaystyle \sigma _{0}(n)=\sigma _{0}(n+1)}
+
+
+
+from: https://en.wikipedia.org/wiki/Möbius_inversion_formula
+The classic version states that if g and f are arithmetic functions satisfying
+
+{\displaystyle g(n)=\sum _{d\,\mid \,n}f(d)\quad {\text{for every integer }}n\geq 1}
+then
+
+{\displaystyle f(n)=\sum _{d\,\mid \,n}\mu (d)g\left({\frac {n}{d}}\right)\quad {\text{for every integer }}n\geq 1}
+
+
+
+
+iff (n-1)! = n - 1 mod n, then n is prime (Wilson's theorem)
+if g and f(x) -> g^x mod n generates all elements of n:
+    1 * 2 * 3 * ... * n - 1 = g^a * g^b * g^c * ... * g^z
+                            = g^1 * g^2 * g^3 * ... * g^(n - 1)
+                            = g^(1 + 2 + 3 + ... + n - 1)
+
+                                ((n-1)^2 + (n-1))
+                                -----------------
+                            =   g^       2
+
+if g^(((n-1)^2 + n-1) / 2) = n - 1 mod n, n is prime
+
+
+
+p is a factor of every p numbers (for natural numbers)
+probability of x having a prime factor <= P:
+
+    1 - (pr(2) * pr(3) * pr(5) * pr(7) * ... * pr(P))
+
+where
+
+    pr(x) -> 1 - (1 / x)
+
+probability of random x having a prime factor <= 541: .91125011
+
+
+
+if x is a factor of n:
+    numbers from n + 1 to n + (x - 1) do not have x as a factor
+    numbers from n - 1 to n - (x - 1) do not have x as a factor
+    2(x - 1) numbers close to n have gcd(y, n) = 1 (y = nearby number)
+
+
+n = pq, p, q > 2, 3
+totient(n) is divisible by 4
+    p is prime, q is prime
+    p - 1 is even, q - 1 is even
+    ((p - 1) * (q - 1)) % 4 == 0
+
+
+
+x = g^4
+for factor_guess in primes:
+    accumulator = factor_guess
+    outputs = []
+    y = x^factor_guess mod N
+    while y not in outputs:
+        if y == 1:
+            4 * accumulator == totient
+        outputs.append(y)
+        y = y^factor_guess mod N
+
+
+
+
+
+
+
+f(a + b, b) -> ab
+    b(a + b)
+    ab + bb - bb
+    ab
+
+f(ab, b) -> a + b
+    ab + bb
+    b(a + b)
+    b(a + b) / b
+    a + b
+
+a + b + c
+bc(a + b + c)
+abc + bbc + bcc
+abc + bbc + bcc - bbc - bcc
+abc
+
+a + b + c + d
+bcd(a + b + c + d)
+abcd + bbcd + bccd + bcdd
+abcd + bbcd + bccd + bcdd - bbcd - bccd - bcdd
+abcd
+
+a + b + c + d + e
+bcde(a + b + c + d + e)
+abcde + bbcde + bccde + bcdde + bcdee
+...
+
+a + a + a + a
+aaa(a + a + a + a)
+aaaa + aaaa + aaaa + aaaa
+4aaaa
+4aaaa / 4
+aaaa
+
+(xa * a^x-1) / x = a^x
+
+abc
+abc + bbc + bcc
+b(ac + bc + cc)
+bc(a + b + c)
+bc(a + b + c) / bc
+a + b + c
+
+
+gggg
+gggg + gggg + gggg + gggg
+ggg(g + g + g + g)
+ggg(g + g + g + g) / ggg
+g + g + g + g
+
+(x * g^x) / (g^x-1) = x * g
+
+
+
+
+a^3 + b^3 = (a + b)(a^2 + b^2 − ab) (from https://math.stackexchange.com/questions/3063839/super-hard-system-of-equations#comment6317549_3063839)
+
+a^1 + b^1 = a + b
+a^2 + b^2 = (a + bi)(a - bi)
+a^3 + b^3 = (a + b)(a^2 + b^2 - ab)
+a^4 + b^4 = ?
+
+
+
+
+Are there unobservable sections of the sky
+
+
+                    . . . . . . . . . . .
+                           \ | /
+                    . . . .-. .-. . . . .
+                           / | \
+                    . . . . . . . . . . .
+                    . . . . . . . . .
+
+
+
+
+
+
+
+
+
+(a + b + c) * (a + b + c) * (a + b + c)
+(aa + ab + ac + ab + bb + bc + ac + bc + cc) * (a + b + c)
+(aa + 2ab + 2ac + 2bc + bb + cc) * (a + b + c)
+(a + b + c) * (aa + 2ab + 2ac + 2bc + bb + cc
+aaa + 2aab + 2aac + 2abc + abb + acc + aab + 2abb + 2abc + 2bbc + bbb + bcc + aac + 2abc + 2acc + 2bcc + bbc + ccc
+
+
+
+
+
+
+
+for primes n, p_i:
+    n! = n * product(2, p_max < n, p_i^sum(x=1, x=log_p(n), 1/p^x))
+
+                     (logp(n)   )
+          p <= n     (sum  n/p^x)
+    n! = product  p^ (x=1       )
+           p=2
+          p=prime
+
+
+
+
+The factorization of n! + 1 consists only of primes > n
+
+
+The ability to compute modular factorials implies the ability to factor large integers
+Does knowledge of the factorization of the modulus provide the ability to evaluate modular factorials?
+
+
+
+
+a^2 + (bi)^2 == a^2 - b^2
+    difference of two squares is equivalent to a sum of two squares
+    product of two sums of two squares is a sum of two squares (fibonacci-brahmagupta)
+    product of two differences of two squares is a sum of two squares
+
+
+
+
+t(n) = t(pq) = 1 + 2 + 3 + ... + n
+             = n + n + n + .. + n
+             = nk
+
+
+
+p = 7
+(7 - 1)!
+1 2 3 4 5 6
+1 2 3 -3 -2 -1
+-1 * (1 2 3) ^ 2
+-1 * 3!^2
+(-1 ^ ((p - 1) / 2) % 2) * ((p - 1) / 2)!^2
+x = (p - 1) / 2
+p - 1 equiv -1 ^ (x % 2) * x!^2 mod p
+
+1 2 3 4        7
+-6 2 3 4
+-6 -5 3 4
+
+
+
+ for prime p, #quadratic residues mod p = (p + 1) / 2
+
+
+
+
+
+
+a^3 = (a^1.5)^2 = (a^1 * a^(1/2))^2
+
+
+
+
+
+
+a^2 - b^2 = N
+if 2^k is a factor of b, then 2^2k is a factor of b^2
+if 2^k is a factor of b, then the 2k least significant bits of a^2 - b^2 are equal to the least significant bits of a^2
+
+
+
+
+
+
+apply line fitting/fourier transform/etc to length of rows formed by groups
+
+    e.g. 3x mod 10
+
+    0   3   6   9
+    2   5   8
+    1   4   7
+
+
+
+
+
+
+
+g^(2^x) mod (2^k) + 1 == 1 if (2^k) + 1 is prime?
+
+
+
+
+f(x) == g(x)
+g^-1(f(x)) == g^-1(g(x))
+g^-1(f(x)) == x
+
+
+
+
+
+
+Misc
+====
+Do any operations on any n-gonal numbers have more properties than the operation would have on an integer (e.g. commutativity)?
+- E.g. does `triangle(x) @ triangle(y)` posses the same set of properties as `x @ y`?
+
+
+
+
+What (mean, median, mode) is a better predictor if there is a sizable gap between data points?
+
+    0 1 2 3 5 6 7
+
+- mean: 24 / 7  = 3
+- median:       = 3
+- mode:
+
+    0 1 2 10 98 99 100
+
+- mean: 310 / 6 = 51
+- median:       = 10
+- mode:
+
+- helpful to know number of missing data points (points with gap between them)
+   - |x_i - x_i+1|
+
+
+
+
+
+
+storing 4 (x, y) points = 8 points
+storing x, y, w, h = 4 points
+    only works if (x0 == x1) and (x2 == x3)
+         works for rectangles
+
+
+storing 3 (x, y) points = 6 points
+storing a, b, c = 3 values
+
+    works for x0 < x1 < x2
+    works for triangles
+
+
+
+
+
+
+
+
+
+
+traversing all points (without returning to original)
+
+         .
+
+    .       .
+
+3 points
+3 edges
+for a given point there are 2 possible paths - (n -1)!
+among all points there are 6 possible paths - n!
+
+
+    .       .
+
+    .       .
+
+
+4 points
+6 edges (4 outside + 2 diagonals)
+for a given point there are 6 possible paths - (n - 1)!
+among all points there are 24 possible paths - n!
+diagonals are longer than vertical/horizontal points (pythagorean theorem)
+    - Try to follow vertical/horiztonal edges rather than diagonals
+
+
+    a       b    c      d
+    .       .    .      .
+        3     1      2
+
+4 points
+4 edges
+points on a line reduce the number of edges
+    - Try to follow long, straight lines
+fastest way through goes through points is in sequence
+    - What if starting point is not at the end
+        - b -> a -> c -> d
+            - 3 + 4 + 2         = 9
+        -  b -> c -> d -> a
+            - 1 + 2 + 1 + 2 + 3 = 9
+        - b -> d -> c -> a
+            - 1 + 2 + 2 + 1 + 3 = 9
+
+
+        .
+     1  b    7
+    .           .       .
+    a           c       d
+         5          3
+
+
+4 points
+5 edges
+a->c->d->b
+    - 5 + 3 + 7 = 15
+a->b->c->d
+    - 1 + 5? + 3 = 9
+
+- Not necessarily more efficient to take the straight line and points at right angles
+- Try the shortest edge first
+
+
+
+
+
+
+
+
+
+
+
+
+        d
+        .
+       2
+
+    a   b       c
+    .   .       .
+      1      3
+
+4 points
+5 edges
+
+Strategy:
+Trace the perimeter of the "cloud" of points
+
+    - if starting point is not on the perimeter:
+        - take the shortest path to the closest point on the perimeter
+    - going clockwise, go to the next point on the outer-most part of the perimeter
+
+
+
+
+
+
+
+subset sum problem
+modulus n
+set a, b, c, ..., x, y, z, each element
+sum a + c + ... + x + z
+if k is a factor of all operands of sum (or all elements of set), then
+    sum' = sum / k
+    sum' == a/k + c/k + ... + x/k + z/k
+a/k is smaller than a by log2(k) bits
+size of elements influences density, which influences hardness
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .  .  .  .  .<- k (2)
+    .  .  .  .  .
+   |------n------|
+         (5)
+
+- number of points: kn
+- number of connections between points: k^n
+    - "connections":
+        - line (vertex) From a point in one column to a point in the column to the right
+
+                .
+             .  .
+          .  .  .
+       .  .  .  .
+    .  .  .  .  .
+    1  2  3  4  5...
+
+- number of points: n(n + 1) / 2
+- number of connections between points: n!
+
+                      .
+                   #  # <- 2 powers of 2
+                .  #  #
+             #  #  #  # <- 4 powers of 2
+          .  #  #  #  #
+       #  #  #  #  #  # <- 6 powers of 2
+    .  #  #  #  #  #  #
+    1  2  3  4  5  6  7
+                       \
+       2  6  24 120 720 5040
+
+   2 ** 1  +  (2^-1 * 0)               = 2
+      (2 ** 2) + (2^0 * 2)             = 6
+            (2 ** 4) + (2^1 * 4)       = 24
+               (2 ** 6) + (2^3 * 7)    = 120
+                  (2 ** 9) + (2^5 * 11)=
+
+- How many powers of 2 appear in the grid?
+    - If n is odd:
+        - x - 1 in the bottom row, x - 3 in the next, x - 5 in the next...
+        - 2 in the top row, 4 in the next room, 6 in the bottom row
+        - number of powers of 2:
+            - 2 + 4 + 6 + ... < n - 1 =  (n - 1) * ((n - 1) / 2)
+
+
+- Not counting the point at 1, how many leftover points appear in the grid?
+    - If n is odd: (n - 1) / 2
+
+- Value of powers of two present in n!:
+    - x = (n - 1) / 2
+    - 2^(x(x + 1) / 2)
+
+    - 2^(x(x + 1) / 2) is a factor of n!
+    - lower bound on size of log2(n!): 2^(x(x + 1) / 2)
+
+
+
+             .
+          .  .
+       #  #  .
+    .  #  #  .
+    1  2  3  4
+
+- Value contributed by remaining points/connections:
+    - for i in (1, n, step=2): (i * (i + 1)) + (i * (i - 1))
+        - can start at 3
+
+
+
+
+
+
+
+
+
+                          .
+                       #  #
+                    .  #  #
+                 #  #  #  #
+              .  #  #  #  # 7!
+           #  #  #  #  #  #
+        .  #  #  #  #  #  #
+        1  2  3  4  5  6  7
+
+
+
+
+
+    7   #  #  #  #  #  #  #
+    6   #  #  #  #  #  #  #
+    5   #  #  #  #  #  #  #
+    4   #  #  #  #  #  #  #
+    3   #  #  #  #  #  #  # 7!^2
+    2   #  #  #  #  #  #  #
+    1   #  #  #  #  #  #  #
+        1  2  3  4  5  6  7

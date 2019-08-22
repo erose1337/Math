@@ -1,0 +1,1058 @@
+Polar coordinates v Cartesian coordinates
+=========================================
+
+
+        y
+        /\
+        |    a
+        |- -/- -
+        |- / - -
+    |==>|-/- - -
+    |   |/ - - -
+    |   0---------->x
+    |          /\
+    +----------||
+            "basis" or "reference"
+
+Polar coordinates
+-----------------
+- measurements given in (degrees, length)
+- measurements given in:
+   - angle between line and one axis from basis/reference
+        - Is there a notion of angle between line and > one axis?
+   - length of the line:
+        - sqrt(x^2 + y^2) (euclidean norm, distance from 0)
+- Do polar coordinates have a norm?
+
+Cartesian coordinates
+---------------------
+- measurements given in (x, y)
+- measurements given in:
+    - length of line along one axis of the basis/reference
+    - length of line along another axis of the basis/reference
+
+
+Xor and And with polynomials where x > 2
+========================================
+
+- Compute exclusive-or on polynomials `x^a + x^b + x^c ...`
+    - Same as when x=2, just evaluated as below:
+        if a_1 == a_2:
+            y^a = 0
+        else:
+            y^a = 1
+    - Properties:
+        -
+
+- Compute `and` on polynomials
+    if a_1 == a_2 and a_1 > 0:
+        y_a = a_1
+    else:
+        y_a = 0
+
+
+
+
+
+
+
+
+subset sum signature scheme
+===========================
+
+distribute set of ciphertexts as public key
+
+sign:
+    - hash message
+    - use bits of hash to select elements of set to sum
+    - decrypt sum
+        - yields a preimage that sums to sum, but is not the hash of the message
+    - distribute message/hash and alternative preimage signature `s`
+
+verify:
+    - hash message
+    - check that the hash does not equal the signature
+    - use bits of hash to select elements of set to sum (sum1)
+    - use bits of signature to select elements of set to sum (sum2)
+    - output True if sum1 == sum2
+
+
+
+
+
+
+
+These use pickle.load(s)
+- Cookie
+- Google keyring
+- 2to3
+- bsddb
+
+
+
+
+
+
+
+Information and Questions
+====================================
+
+
+there exists a set of information related to the question
+there exists a subset of that information helpful in answering the question
+
+
+
+
+
+Is there some kind of turing-equivalence notion for proof languages?
+What is the smallest number of axioms you can use to prove anything any other equivalent language could prove?
+Is there a hierarchy of statements/languages, where languages that can be used to prove a statement overlap (like complexity theory for proofs)
+
+
+
+
+IBE
+===
+is it possible to securely authenticate a peer if only a username is known?
+    - possible without trusted third parties ("TTPs")?
+        - possible without TTPs being all-knowing?
+        - possible without TTPs being a single point of failure?
+        - possible without TTPs knowing what peer is authenticating what other peer?
+
+
+
+
+
+
+z = sqrt(x^2 + y^2) mod P
+distance from 0, mod P?
+
+
+
+
+
+
+
+
+
+L2 Norm
+=======
+
+f(a, b) -> sqrt(a^2 + b^2)
+
+What properties do norms have?
+
+What shape does x = f(a, b) produce for natural numbers x?
+
+
+
+
+
+
+
+
+Sampling
+========
+
+Recording
+---------
+- find next peak or valley
+- record (absolute) max height
+   - could take the point with the largest height
+   - could average nearby values
+
+Playback
+--------
+- take in two points from the input samples (point_a and point_b)
+- repeat until all points are used:
+   - push point_a onto the output stack
+   - draw a curve between them and push some number of points from the curve onto the output stack
+   - push point_b onto the output stack
+   - set point_a = point_b
+   - set point_b = next point from the input samples
+
+
+
+
+
+
+
+
+
+Units in sums of two squares
+============================
+(a^2 + b^2) * (c^2 + d^2) is equal to a sum of two squares
+Are there sums of two squares that are not the product of two sums of two squares?
+    Do they behave as fundamental units, e.g. "primes"
+        given such a "unit", can you use it to make all other elements?
+
+
+
+
+
+
+
+The set of all information exists
+The simplest operation is `copy`
+    - e.g. basis of life is self-replication, an organism creating copies of itself is a pattern of information making copies of itself
+    - `copy` is the same thing as `mov`
+        - `mov` is arguably mis-named
+- mechanisms for storage of information needed
+
+Expressive programming language
+===============================
+- use case (bold, italic, normal) to indicate meaning
+- =? as comparison operator?
+- for name/type declaration, use:
+
+    for a vector v, scalar s, type x, ..., :
+
+
+    Class_Name
+    ==========
+    - attribute: value
+
+    method_name
+    -----------
+    -
+
+
+
+Pickle Investigation
+====================
+
+- Crawl repos on github for python modules
+    - find places in code where pickle.load or pickle.loads are called
+    - mark as potentially exploitable
+        - determine if exploitable
+- Create dependency tree of exploitable modules
+
+- Check if program in dependency tree
+
+- Determine target programs list of dependencies
+    - Check if dependency
+
+Pride
+=====
+
+auto_unschedule
+---------------
+- indicate which attributes are instructions that should be unscheduled upon deletion
+
+
+
+
+
+
+
+LLL
+===
+LLL tends to output elements that are roughly the same size
+If the value it is looking for is larger than the size of those chunks, you can break it up into pieces at the cost of adding more columns
+Can you use a large enough modulus and a sufficiently small target vector to increase the number of columns needed to perform the attack to a prohibitive amount?
+
+
+
+
+what is the minimal algebra that can be used for DH?
+what is the simplest algebra that can be used for cryptography?
+are there algebras that are too simple to use for any cryptography?
+are there algebras that have too many properties for use with cryptography?
+
+
+
+
+
+=========================
+computing N! modulo N + 1
+
+                     (1 + 2 + 3 + ... N)
+- N! mod (N + 1) = g^                   mod (N + 1)
+    - where g is a generator
+        - a generator can be found using the factorization of N + 1
+
+- Can test if N is prime if N + 1 can be factored in acceptable time
+    - a randomly selected number is probably not a worst-case instance of the factoring problem
+        - n is a factor of every n numbers
+        - a randomly selected number has a 1/x chance of having x as a factor
+        - probability that none of the first x numbers divide n:
+            - p = 1/2 * 2/3 * 3/4 * 4/5 * ... * (x-1)/x
+        - probability that at least one of the first k primes divides n:
+            - 1.0 - p
+- Begin factoring N and N + 1
+- If factoring N finishes first, then use the factorization to determine primality
+- If factoring N + 1 finishes first, then use the factorization to compute N! mod (N + 1)
+- probability that neither (random) N or N + 1 have any of the first k primes as factors: 1/p^2
+
+
+def prime_test(n):
+    n1 = n + 1
+    g = find_generator(n1)
+    x = tri(n)
+    if pow(g, x, n1) == 1:
+        return True
+
+def find_generator(n):
+    factorization = factor_integer(n)
+    g = use_factorization_to_find_generator(n, factorization)
+    return g
+
+def use_factorization_to_find_generator(n, prime_factors):
+    size = int(log(n, 2) * 8)
+    while True:
+        candidate = random_integer(size) % n # biased, but probably fine
+        for prime in prime_factors:
+            b = pow(candidate, n / prime, n + 1)
+            if b == 1:
+                break
+        else:
+            #outputs = []
+            #for x in range(n):
+            #    gx = pow(candidate, x, n + 1)
+            #    print("Testing if g^{} in outputs already".format(x))
+            #    if gx in outputs:
+            #        print len(set(outputs)), outputs, gx, n
+            #        raise ValueError("Did not find correct generator")
+            #    outputs.append(gx)
+            #print("Found generator for {}".format(n))
+            return candidate
+
+
+
+
+# for x, y such that f(x) = y
+#   draw the line from (x, 0) to (0, y)
+# examine result for congruences and relationships
+import pride.gui.themes
+import pride.gui.gui
+class Graph_Theme(pride.gui.themes.Theme):
+
+    def draw_texture(self):
+        x_offset, y_offset, x_max, y_max = self.area
+        x_scalar = x_max / len(self.inputs)
+        y_scalar = y_max / len(self.outputs)
+        y_axis = y_offset + y_max
+        line_color = self.glow_color
+        draw = self.draw
+        for x, y in zip(self.inputs, self.outputs):
+            draw("line", x_offset + (x_scalar * x), y_axis,
+                         x_offset, y_axis - (y_scalar * y),
+                 color=line_color)
+
+class Function_Graph(pride.gui.gui.window):
+    defaults = {"inputs" : tuple(), "outputs" : tuple(),
+                "theme_type" : Graph_Theme}
+
+
+Currency that disincentives hoarding
+====================================
+- Design a currency that makes hoarding large amounts of money infeasible, impractical, inconvenient, and not cost-effective
+    - Require significant financial investment to hold on to a unit of currency
+    - Spending should be easy, convenient, and inexpensive
+        - e.g. no added charges beyond the value of an item purchased (tax)
+
+
+Large space requirement to hold a currency unit
+-----------------------------------------------
+- e.g. storing n units requires 2^n space
+- Requires hardware and maintenance, or a subscription to a service that provides them
+- Requires redundancy for reliable long-term storage
+- Requires power
+    - How does it compare to the power used by large time requirements?
+- Implies large bandwidth cost to transfer a currency unit
+
+
+Large time requirement to hold a currency unit
+----------------------------------------------
+- e.g. storing n units requires 2^n time
+- Requires increasingly expensive hardware to evaluate 2^n operations in convenient time for larger n
+- Requires power
+    - How does it compare to the power used by large space requirements?
+
+
+Value is related to density
+---------------------------
+- Denser currency units have a larger value/space ratio
+    - Example with arbitrary values: a 1-unit requires 2^1 space (1/2 = .5), but a 10-unit requires 2^11 space (10/512 = .019)
+- For a given amount of space, it is more efficient to hold lower-valued units rather than higher-valued units
+    - Using the same numbers from above
+        - 2^11 space could hold 11 1-units (total value: 11 * 1 = 11)
+        - 2^11 space could hold  1 10-unit (total value: 1 * 10 = 10)
+
+
+
+Chording Keyboard
+=================
+- Converts a normal keyboard into programmable chording keyboard
+    - Pressing multiple keys simultaneously allows to select from 2^n different possible states, where n is the number of possible keys
+    - Enables "pass-chords" e.g. password, passphrase, passchords
+- Can make compatible with regular keyboard by simply not registering chord presses with any callback
+
+Mode Toggle
+-----------
+- Press mode: pressing a key turns the state on, and releasing a key turns the state off
+- Hold mode: pressing and releasing a key swaps the off/on state of the key
+
+When is a key press registered and acted upon?
+----------------------------------------------
+- Normally this happens when a key is released
+    - Try: When a key is released, use all currently pressed keys to determine state, then release the key
+        - ignore the next release of all keys that are still pressed
+
+    Layout
+    ======
+    - Put more common/helpful items in more accessible areas
+    - Assuming a qwerty-layout keyboard
+        Option 1
+        --------
+            Home Row
+            --------
+            - 9 Instantly accessible keys
+            - asdf jkl; and the space bar
+            Extended Home Row
+            -----------------
+            - 14 Easily accessible keys
+            - Includes the characters from Home Row, plus CAPS LOCK ' and enter/return
+        Option 2
+        --------
+        - keep fingers in constant arrangement as in asdf jkl;
+            - fingers simply resting straight across
+        - move up and down rows as needed, while retaining straight across arrangement of fingers
+        - In one row, there are 2^9 (512) instantly accessible states
+
+
+
+Analog table look-up
+====================
+- use transformer to implement a key:value lookup
+
+
+Are key:value stores "complete"?
+================================
+- Can you use them to implement any function
+
+
+Sequences
+===================
+- A sequence X is an ordered collection of data
+    - f(i), f(j), ..., f(k)
+    - X_i, X_j, ..., X_k
+- The length of a sequence X is denoted |X| and is equal the number of samples in the sequence
+- Two sequences are equivalent if |X| == |Y| and X_i == Y_i for all i
+- A subsequence of X is a sequence Y such that X_i == Y_0, X_(i+1) == Y_1, ..., X_(i+j) == Y_|Y| for 0 < i < |X|
+    - X contains Y
+    - Y is in X
+        X = 0 1 2 3 4 5 6 7 8 9
+        Y = 0 1 2 3 4
+        Z = 5 6 7 8 9
+        Y is a subsequence of X
+        Z is a subsequence of X
+
+Operations and their relations
+------------------------------
+- Concatenation X || Y
+    - Example:
+        X = 0 1 2 3
+        Y = 4 5 6 7 8 9
+     X||Y = ___________
+          = 0 1 2 3 4 5 6 7 8 9
+    - non-commutative
+        - equivalent to X + (Y * 2^k)
+    - There exist A, B such that A || B != B || A
+        - Property still occurs in some quantity of A, B of a given length (what quantity?)
+    - Inverse: Slice
+
+- Slice X[x:y] for sequence X and (optional) scalars x, y
+    - If x is not specified, x=0 is implied
+    - If y is not specified, y=|X| is implied
+    - returns the subsequence X_i for i in range(x, y)
+    - Example:
+            X = 0 1 2 3
+            Y = 0 1 2 3 4 5 6 7 8 9
+       Y[|X|:]= ___________________
+                4 5 6 7 8 9
+    - X[:-|Y|] removes the last |Y| entries from X
+        - X[:-|Y|] is the inverse of X || Y
+
+
+- X % Y = X_i for all i if X_i != Y_i else 0
+    - |X % Y| = |X|
+- X ?? Y is equal to the number of times the sequence Y appears in X
+- X / Y is equal to X with all copies of the subsequence Y removed
+        (X || Y || Y || Z || Y || Z) / Y
+      =  X || Z || z
+    - Y is a factor of X if Y is a subsequence of X
+- X ?? y for a sequence X and scalar y is equal to X + X + ... + X, for y terms
+        X_0, ..., X_|X|, X_0, ..., X_|X|, X_0, ..., X_|X|  ...
+              1                2                3
+- X * Y for two sequences X, Y is equal to X_0 + Y + X_1 + Y + ... + X_|X| + Y
+    - interleaves copies of Y into samples of X
+- XY for two sequences X, Y is equal to X_0 + Y_0 + X_1 + Y_1 + ... + X_|Y| + Y_|Y| + X_(|Y| + 1) + ... + X_|X|
+    - interleaves samples of Y into samples of X
+#- The weight of a sequence X is the number of non-zero entries in X
+#    - |X_i for all i if X_i != 0|
+
+Polynomial Equivalent operations
+----------------------
+- A sequence X can be represented by a polynomial of the form
+        2^(w*0)*X_0 + 2^(w*1)*X_1 + 2^(w*2)*X_2 + ... 2^(w*i)*X_|X|
+        a^0 * X_0 + a^1 * X_1 + a^2 * X_2 + ... + a^|X| * X_|X|
+  where w is the word size of the alphabet
+    - or numerical base
+        - "A sequence X can be represented by a polynomial of the form
+
+            w = w^0, w^1, ... w^i
+            s = s_0, s_1, ..., s_i
+            X = dot_product(s, w)
+              = (s_0 * w^0) + (s_1 * w^1) + ... + (s_i * w_i)
+
+            where:
+                - `w` is for "width", the number base or the size of the set of all symbols in the alphabet
+                    - The w vector provides the "shape", it aligns the symbols of the sequence one after another with no overlap
+                - 's' is for "symbols"
+                    - The s vector provides the elements of the sequence
+                - The dot_product takes the elements of the
+
+- Sum X + Y is equal to X_0 + Y_0, X_1 + Y_1, ... X_min(|X|, |Y|) + Y_min(|X|, |Y|)
+        X = 0 0 0 0 4 5 6 7 8 9
+        Y = 0 1 2 3
+         X+Y = ___________________
+            0 1 2 3 4 5 6 7 8 9
+
+- Difference X - Y is equal to X_0 - Y_0, X_1 - Y_1, ..., X_min(|X|, |Y|), Y_min(|X|, |Y|)
+    X = 0 1 2 3 4 5 6 7 8 9
+    Y = 0 0 0 0 4 5 6 7 8 9
+      -____________________
+      = 0 1 2 3
+
+- X_i * y for an element of a sequence X_i and a scalar y is equal to the product of the value of X_i with y
+- X * y for a sequence X and scalar y is equal to X_0 * y, X_1 * y, ..., X_|X| * y
+- X_i * Y for an element of a sequence X_i and a sequence Y is equal to
+        (a^i * X_i) * (a^0 * Y_0 + ...  + a^|Y| * Y_|Y|)
+         (a^i * a^0 * X_i * Y_0) + (a^i * a^1 * X_i * Y_1) + ... + (a^i * a^|Y| * X_i * Y_|Y|)
+- X * Y for two sequences X, Y is equal to  X_0 * Y, X_1 * Y, ..., X_|X| * Y
+(x^2y + x^1z)(x^2a + xb)
+
+
+- Length |X| = log(X, b), for a base
+
+The concatenation operation
+---------------------------
+- concatenation, denoted by `X || Y`, is a function on two sequences that outputs one sequence
+    - |(X || Y)| = |X| + |Y|
+        - The length of the concatenation of X and Y is equal to the length of X plus the length of Y
+        -
+    `f(X, Y) -> X + (w^|X| * Y)`
+
+where `'0'` denotes the "zero" sequence
+
+    `w^|X|` is the
+
+    `shift = |X|`
+
+- forms a group?
+    - inverse element:
+        (X || Y) || -Y = X + (w^|X| * Y) + (w^|X| * (-1 * Y)) = X
+    - if Y == X, then the operation is commutative
+    - if Y != X, then the operation is non-commutative
+
+
+Compress
+--------
+- Look for all identical sequences of length |input|/2 ... 1
+    - Store sequence:occurrences pairs
+    - store f(i), ..., f(j) in the common data section
+    - push an index to the sequences location in the common data section onto the data stack section
+- Look for sequences
+
+
+
+
+
+
+
+
+
+
+"Has the property of" rather than "is"
+======================================
+
+
+
+
+
+ROL with modular arithmetic
+===========================
+rotate_left(x, k, n, b): (x / b^k) + (x * b^(n - k))
+rotate_right(x, k, n, b): (x * b^k) + (x / b^(n - k))
+- x: number to be rotated
+- k: shift magnitude, the amount of rotation
+- n: word size, the number of points on the regular n-gon
+- b: number base, binary, ternary, octal, decimal, hex, etc
+    - only examined with b=2 so far
+
+- Can you use this to actually track rotation about a circle rather than using it to do bitwise rotation?
+- Can you use bitwise rotation to efficiently track rotation about a circle?
+
+- Application to group theory?
+    a = g^x mod p
+    g^(x + 1) mod p == rotate_left(a, 1, p, g)
+        - faster to multiply by g than to use rotate_left
+        - g^x * g = rotate_left(g^x, 1, p, g)
+                  = (x / b^k) + (x * b^(n - k)) # substitute definition of rotate_left
+                  = (x / g^1) + (x * g^(p - 1)) # substitute parameter names and values (k->1, n->p, b->g)
+                  = (x / g) + (x * 1)           # substitute g for g^1, 1 for g^(p - 1)
+                  = x/g + x
+                  = x(1/g + 1)
+
+
+
+
+
+
+Solve discrete logarithm problem by solving subset product
+==================================
+- Discrete logarithm problem: Given, g, P, g^x mod P, output x
+- x = (a_k * 2^k) + (a_k-1 * 2^(k-1)) + ... + (a_0 * 2^0)
+    - where a is a vector with coefficients in (0, 1)
+- Given the set g^(2^k), g^(2^(k-1)), ..., g^(2^0) and target g^x, output the vector a
+- Difficulty is determined by:
+    - the size of `x`
+        - determines the number of elements in the set
+        - private exponent may be selected as much smaller than size of the group (e.g. 256 bits)
+    - weight(a) (number of non-zero entries in the target vector a)
+        - determines the number of elements in the subset
+        - is centered around k / 2
+    - density?
+        - For the subset sum problem, density is defined as
+            number of elements in the set
+            -----------------------------
+              log2(largest item in set)
+        - Density very near 1.0 makes the problem hard
+            - Low and High density instances can be solved easily
+
+        -(Unsure) In this case, density = k/log2(g^(2^k))
+            - For a 256-bit exponent:
+                - k = 256
+                - g=2 implies log2(largest item in set) = 2^k?
+                - k/(2^k) is extremely small?
+            - log2(g^(2^k)) is probably log2(P) sized
+                - if P is 2048 bits, then density = 256/2048 = .125
+                - if P is 1024 bits, then density = 256/1024 = .250
+    - https://cstheory.stackexchange.com/a/36155/53055
+
+        > The meet in the middle approaches that work in subset sum and k-sum should also work here with slight modifications.
+        > It can be solved in O~(nm/2) by constructing two lists L1 and L2 where L1 is all possible products from first m/2 lists and L2 is all possible products for last m/2 lists.
+
+- Difficulty: O(2^(log2(x)/4)) ?
+    - log2(x) / 2 is the worst-case weight of x
+        - if weight is larger, then the subset inverse-product problem can be solved instead, where the operator is replaced with the operators inverse (e.g. subset sum -> subset difference)
+    - log2(x) / 4 is the worst-case weight of x, divided by two
+        - division by two from partitioning/meet in the middle attack ?
+    - O(2^(256 / 4)) == O(2^64)
+
+
+Determine function from a sequence
+==================================
+- e.g. (1, 3, 5, 7, ...)
+    - easy for humans to extrapolate that the sequence is "increasing odd numbers"
+        - f(x) -> 0x + 1
+    - Given a sequence, what process will determine a function that generates it?
+        - Take difference of successive entries
+
+
+
+"Natural" Norm
+==============
+- for a vector v
+- f(v) = vector whose elements represent the distance from v_i to the closet natural (or integer) number
+    - k_i = |round(v_i) - v_i|
+        - 0 <= k_i <= 1/2
+            - k_i = 0 if v_i is an natural (or integer)
+            - k_i = 1/2 if v_i = x + 1/2 = (x + 1) - 1/2
+- norm = max(f(v))
+- if norm = 0, then all entries in v are natural (or integer) numbers
+
+
+Group Theory, The Regular n-gon, and weight-1 binary words modulo 2^n
+================================================
+- A group of order n can be represented by a regular n-gon
+- An element of that group can be represented by a vertice (point) on that n-gon
+    - This perspective is equivalent to a weight 1 binary sequence modulo 2^(n)
+        - The vertice representing the group element is equivalent to a '1' bit
+        - The vertices not representing the group element are equivalent to '0' bits
+    - The "increment" group operation is equivalent to the rotation of a weight-1 binary word modulo 2^n
+        - e.g. g * g = g^(1 + 1) = g^2
+    - The "decrement" group operation is equivalent to the opposite rotation of a weight-1 binary word modulo 2^n
+        - e.g. g * 1/g = g^(1 - 1) = g^0 = 1
+    - Could alternatively select edges (lines) instead of vertices to use as representation; there are equal number of both in a regular n-gon
+
+Possibly useful:
+----------------
+- From wikipedia https://en.wikipedia.org/wiki/Regular_polygon:
+    - For a regular n-gon inscribed in a unit-radius circle:
+        - the product of the distances from a given vertex to all other vertices (including adjacent vertices and vertices connected by a diagonal) equals n
+
+    - For a regular convex n-gon, each interior angle has a measure of:
+        - 180(n - 2) / n degrees
+        - (n - 2)/2n turns
+
+- Can you tile a the regular n-gon into some other shape that is convenient for analysis?
+
+
+
+
+Do comparisons use short-circuit evaluation? e.g.:
+
+    def greater_than(x, y):
+        for index, x_bit in enumerate(x):
+            y_bit = y[index]
+            if x_bit:
+                if not y_bit:
+                    return True
+            elif y_bit:
+                return False
+        return False
+
+    - If so, can this be used to mount a timing attack?
+
+
+
+
+
+
+
+
+
+          X   Y   Z   T   ...
+velocity
+position
+spin
+repulsion
+
+
+
+
+
+
+
+
+
+
+
+psuedo 3d via point perspective
+-------------------------------
+place 4 vanishing points at 0, 90, 180, 270 degrees (every 1/4 turn of a circle)
+set field of view to (initial, initial + increment)
+    - e.g. initial = 0
+    - increment controls number of selectable points
+        - #points = 90/increment
+
+mouse motion on the selected axis rotates the field of view by increasing or decreasing the values of the field of view
+
+
+
+
+
+
+
+
+**import** module **for** methods
+=========================
+- Syntax:
+    ```python
+import module for method, constant, variable, ...
+import module for *```
+
+- specifies which content from the module will actually be used
+- not allowing access to other content could be enforced
+    ```python
+import module for x
+module.y # raises Exception```
+- accessing other content can be assumed not to happen
+    - can import only the content that is used and store it locally
+
+
+
+
+
+
+> given a,b,c ∈ N, determine whether ax^2 + by − c = 0 has a solution x,y ∈ N
+
+- is an NP-Complete problem
+- from https://cstheory.stackexchange.com/a/14147/53055
+
+
+
+
+Distributive search through all combinations of expressions
+===========================================================
+- generate or select an expression
+    - generate finds a new expression to evaluate for relationships
+        for function_number, variables, operators in zip(isequence, all_variable_combinations, all_operator_combinations):
+            function = form_expression(variables, operators)
+            yield function_number, function
+    - or can generate a new combination at random
+        - useful for exploring larger and more complex expressions
+    - generate combinations of pre-existing expressions:
+        for function_number, expressions, operators in zip(isequence, all_expression_combinations, all_operator_combinations):
+            function = form_expression(expressions, operators)
+            yield function_number, function
+            # a real function_number will need a more complex format to distinguish between different entries from different generators that share a given expression_number
+
+    - select examines an already known expression from storage
+        - retrieve from storage (e.g. database, distributed hash table, etc)
+
+- search for expressions by specifying relations and constraints
+    - query storage for all expressions with a given relation
+
+- analyze an expression to determine what properties it has
+    - try applying all known (relevant) interfaces first, in order of most common
+        - finds already known structure s(e.g. groups) relatively quickly
+    - is there a way to start without relying on built-in known properties?
+        - What is a property?
+            - A statement involving variables that can be evaluated to obtain a binary conclusion
+            - e.g. (from https://en.wikipedia.org/wiki/Group_(mathematics) )
+                - Closure: For all a, b in G, the result of the operation, a • b, is also in G
+
+                    def closure(f, all_element_pairs_generator, G):
+                        for a, b in all_element_pairs_generator:
+                            if f(a, b) not in G:
+                                return False
+                        return True
+
+                - Associativity: For all a, b and c in G, (a • b) • c = a • (b • c).
+
+                    def associativity(f, all_element_triplets_generator, G):
+                        for a, b, c in all_element_triplets_generator:
+                            if f(f(a  b), c) != f(a * f(b * c)):
+                                return False
+                        return True
+                - etc
+        - How to generate properties?
+            - Generate increasingly complex combinations of statements from qualifiers, functions, and in(equality(ies))
+                - for x, y, z in set_generator
+                - there exists x, y, z
+                - such that ...boolean_statement... (and) ...boolean_statement...
+                    - example boolean_statement: f(a, b) in G
+
+        - How to prune redundant properties?
+            - some properties might be the same as another, just in a different form
+            - when a new relation is discovered, see if it is equivalent to any other relations
+                - would need to be done periodically
+
+
+- search for relationships that are implied by the composition of combinations of known relations
+    - e.g. "all objects that have property a and b have property c"
+           "there is no object that has property c and not have properties a, b"
+
+
+Expressions as Sequences
+========================
+- examine/define expressions e.g. `a + b = c` in terms of Sequences
+    - Sequence: sum((b^i) * symbol for i, symbol in enumerate(expression))
+        - symbol is the natural number encoding of an element in an alphabet or language
+        - b is the base, that represents the size of the alphabet |alphabet|
+            - The size of the alphabet is the number of symbols it contains
+
+
+
+
+Slideshow background
+====================
+randomly select pictures from somewhere and display them as a slideshow
+    - e.g. wikipedia (wikimedia?)
+
+
+
+Are there objects that do not possess a given relation as a whole, but a significant subset of such objects does possess that relation?
+    - e.g. The concatenation function f(x, y) is non-commutative in general, but becomes commutative when y = x
+
+
+
+
+
+
+Qualities of Music
+==================
+
+Primary
+-------
+- a sequence of tones and/or chords
+- rhythm
+- Primary qualities mostly determine what "being the same song" means
+
+
+Secondary
+---------
+- volume
+- tempo
+- sequence
+- staccato
+- legato
+- tapping
+- swells
+- arpeggio
+- Effects in general
+- Secondary qualities determine the qualities of a given instance of a piece of music
+
+
+"Intrinsic" versus "Extrinsic" aspects of music
+===============================================
+- The intrinsic qualities of a piece of music are:
+- Intrinsic qualities are "stored"
+    - "determined at compile time"
+
+
+
+- The extrinsic qualities of a piece of music are:
+    - variations in:
+        - it's a noisy universe, there will always be some deviation from exact, though it may be small
+        - Every instance of a given piece will always be unique from every other instance
+            - small chance for noise to cancel out
+- Extrinsic qualities occur while the piece is being played
+    - "determined at runtime"
+
+
+
+
+
+
+
+
+
+
+except Exception from ...
+=========================
+
+    except Exception from interaction_regarding_name:
+        # "interaction_regarding_name" e.g.:
+        #   a[b]
+        #   a(b)
+
+    except KeyError from "self._value_map[value]":
+
+
+
+
+
+
+
+
+
+
+"Length" and "Angle" (or "Length" and "Trig" ? ) (or "Ruler" and "Compass" ? )
+====================
+- a + b(i^(x mod k))
+    - a is the length of a straight line
+    - bi^(x mod k) is the angular or phase component
+        - b is the radius of the curve
+        - i^(x mod k) is the phase
+            - `i` is the phase unit
+            - `k` is the number of equally spaced points on the edge of a circle
+                - k = 4 is the "imaginary unit" used with "complex numbers"
+                - larger `k`s provide "higher resolution"
+            - x is a point on the edge of a circle
+            - (x mod k) is a finite ... group? ring? field?
+- "Complex numbers" seem to be able to
+
+
+
+
+
+
+
+
+
+
+What attack models exist, and when/why are they relevant
+========================================================
+- Note: This section currently only discusses encryption and confidentiality
+    - There are other attack models for authentication, integrity, MACs, and digital signatures
+
+Attack models
+-------------
+- An attack model specifies what abilities and information the adversary is assumed to have access to
+
+Indistinguishability
+--------------------
+- Models the
+
+
+
+
+
+
+
+
+
+
+Good Ideas
+==========
+- Users post ideas that they think are good, but will not have time/resources to realize on their own
+- Different categories of ideas (e.g. software, games, story ideas)
+    - Should have a dedicated humor category/tag
+- Users vote on the quality of ideas
+- Users can discuss, comment on, and make suggestions to improve a given idea
+- "Implementations" page that shows examples of people who took the idea and realized it
+    - Can vote on the quality of an implementation
+
+
+Cop Rank
+========
+- "Social credit" score to motivate officers to pursue peaceful, non-violent solutions that help the people they interact with
+- After an interaction with a police officer(s), the participating parties submit a review of their experience with the officer(s)
+    - + points for positive interactions
+        - Motivation: Rewards for being a good officer?
+    - - points for negative interactions
+        - Motivation: Aversion towards being a notorious police officer
+        - e.g. murder of civilians garners an extreme amount of negative points
+
+
+n-tau, The Shape Constant
+=========================
+- generalization of 2pi to regular n-gons
+    - n-tau = perimeter / diameter
+    - infinity-tau = pi
+
+
+
+p^2 = 24n + 1
+if sqrt(24n + 1) is a natural number, is it necessarily prime?
+    - No; see primalitytest3.py
+
+
+
+
+
+
+
+Symbolic Solving Strategies
+===========================
+- set expression equal to zero
+- factor the expression if possible
+    - x^2 - y^2 = (x + y) * (x - y)
+    `0 = x^2 - 1
+       = (x + 1) * (x - 1)
+       = (x^2 - x + x - 1)
+       = (x^2         - 1
+       = x^2 - 1
+
+
+        x^2 - 4               = x^2 - y^2
+        (x + 2) * (x - 2)     = (x + y) * (x - y)
+        (x^2 - 2x + 2x - 4)   = (x^2 - xy + xy - y^2)
+        (x^2 - 4)             = (x^2 - y^2)
+- linearize terms
+- re-write variables in terms of other variables
+    - if gcd(a, b) > 1, ax + by = ax + acy = a(x + cy)
+    - x = (y * 2^k) + z  (break into two pieces; the most-significant and least-significant bits)
+
+
+
+Could a polynomial-cost SAT solver be used to learn information about the structure of existence?
+
+
+
+What is the cost of solving a subset-sum problem over an elliptic curve?
