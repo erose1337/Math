@@ -1056,3 +1056,156 @@ Could a polynomial-cost SAT solver be used to learn information about the struct
 
 
 What is the cost of solving a subset-sum problem over an elliptic curve?
+
+
+
+
+public information:
+  - The generator: G
+  - The sequence: 2^0, 2^1, ..., 2^n
+  - The sequence: 2^0 G, 2^1 G, ..., 2^n G (multiply prior sequence by G)
+      - Referred to as "the set"
+  - x = 2^i, 2^j, ..., 2^k
+      - alternatively written as: 2^i + 2^j + ... + 2^k
+      - alternatively written as the inner product of 2^0, 2^1, ..., 2^n with i, j, ..., k where {i, j, k in (0, 1)}
+      - Referred to as "the subset" or "the solution vector"
+  - x G = (2^i + 2^j + ... + 2^k)G
+goal:
+  - Given x G, output x
+  - Given the set, find a subset that sums to x G
+  - Given the set as a vector `a` (e.g. `a = sorted(the set)`) and the inner product `y = a*x` find the binary vector `x`
+      - The inner product of two vectors is denoted *
+
+
+
+
+
+
+From: https://en.wikipedia.org/wiki/Additive_number_theory#Additive_number_theory
+
+> For example, Vinogradov proved that every sufficiently large odd number is the sum of three primes,
+> and so every sufficiently large even integer is the sum of four primes.
+> Hilbert proved that, for every integer k > 1, every nonnegative integer is the sum of a bounded number of k-th powers.
+
+From: https://en.wikipedia.org/wiki/Goldbach%27s_conjecture
+
+> Every even integer greater than 2 can be expressed as the sum of two primes.
+> Every integer greater than 5 can be written as the sum of three primes.
+
+From: https://en.wikipedia.org/wiki/Fermat_polygonal_number_theorem
+> For odd positive integers a and b such that b^2 < 4a and 3a < b^2 + 2b + 4
+> we can find nonnegative integers s, t, u, and v
+> such that a = s^2 + t^2 + u^2 + v^2 and b = s + t + u + v.
+
+
+
+From: https://en.wikipedia.org/wiki/Hilbert_space
+> The basic feature of the dot product that connects it with Euclidean geometry is that it is related to both the length (or norm) of a vector, denoted ||x||, and to the angle θ between two vectors x and y by means of the formula
+> x * y = ||x|| ||y|| cos Theta
+
+
+
+Self-Documenting Language
+=========================
+- Markdown compatible
+- Stack machine
+    - define things like data and functions
+    - calculator-like syntax in code blocks
+
+Global Data
+===========
+0. 1
+1. 0
+
+
+Example Function
+----------------
+- arguments: a, b, c
+- code:
+
+    a = a * 2
+    b += 1
+    return a + b + c
+
+
+
+x^0
+x^0 + x^0 + x^0
+-x^0 - x^0 - x^0
+
+
+1, 2, 3, ... (naturals)
+-3, -2, -1, 0, 1, 2, 3, ... (integers)
+3/2, -3/-2, ... (rationals)
+
+
+
+
+
+ a     c     ad + bc
+--- + --- = ----------
+ b     d       bd
+
+a(b^-1) + c(d^-1) = (bd^-1)(ad + bc)
+- left expression cost: 2 inversions, 2 multiplications, one addition
+- right expression cost: 1 inversion, 4 multiplications, one addition
+
+
+
+ "Subset Inner Product Problem"
+ ====================
+ - Public information: A set of n elements: a, b, c, ...,
+ - F:
+
+         select a random vector X of length k using elements of the set
+         select a random vector Y of length k using elements of the set
+         output XY
+
+     (Where `XY` denotes the dot product (or inner product) of X and Y)
+ - How large should `n` and `k` be?
+     - if `k` is too large, repeats will be selected from the set
+     - log2(k) < log2(n) / 2 == k < sqrt(n)
+       - Alternatively:
+           - rejection sampling can ensure no duplicates
+           - Pick a random binary vector of length n and weight k
+           - the "random vector" is the k selected entries from the set
+           - guarantees no duplicates; can use higher weight subsets
+     - how large should 'n' be?
+        - surely the problem is no easier than a subset-sum problem
+           - n = 1024 for subset-sum problem should provide approximately 128-bit security (post-quantum)
+
+Subset-matrix-product Problem
+-----------------------------
+- Public information: A set of n vectors of length k: a, b, c, ...
+- F:
+
+        create a matrix X by selecting i random vectors from the set
+        create a matrix Y by selecting i random vectors from the set
+        output XY
+
+    where X * Y is the matrix product
+
+        [a, b] * [e, f] = [ae + bg, ce + dg]
+        [c, d]   [g, h]   [af + bh, cf + dh]
+
+                 [e, g]
+                 [f, h]
+
+
+
+
+"Subset operation Problem"
+==========================
+- Generalization of subset-sum, subset-product, subset-inner product, ...
+- What structure is common between them?
+    - Problem has some set of public values
+    - values are selected randomly from that set
+        - can model this selection process as the dot product between a binary vector and the set (represented as a vector, as opposed to a "set" e.g. unordered)
+    - `operation` is used to combine those values in some manner
+        - the operation consumes the elements of a vector and accumulates a result
+        - (f(f(a, b), c), ...)
+
+
+Subset group-operation Problem
+==============================
+- What structure is shared between different groups (e.g. additive group, multiplicative group)
