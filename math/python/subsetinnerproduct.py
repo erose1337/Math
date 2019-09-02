@@ -62,4 +62,5 @@ def generate_vectors(parameters=PARAMETERS):
     return random_vector(parameters), random_vector(parameters)
 
 def generate_point(vector1, vector2):
+    # ab + cd + ef + ...
     return sum(vector_i * vector2[i] for i, vector_i in enumerate(vector1))

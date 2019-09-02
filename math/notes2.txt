@@ -1108,24 +1108,46 @@ From: https://en.wikipedia.org/wiki/Hilbert_space
 Self-Documenting Language
 =========================
 - Markdown compatible
-- Stack machine
+- Stack machine?
     - define things like data and functions
-    - calculator-like syntax in code blocks
+    - arbitrary language in code blocks
+        - indicate language when opening a code block
+            - example:
+                ```python
+                1 + 1```
 
-Global Data
+
+###### Example Program
+______________________
+
+Global_Data
 ===========
+Comments are simply text.
+
+Global_Data is a sequence with two elements: (1, 0)
 0. 1
 1. 0
+___________
 
-
-Example Function
-----------------
+Function
+--------
 - arguments: a, b, c
 - code:
+    ```python
 
     a = a * 2
-    b += 1
-    return a + b + c
+    b += Global_Data[0]
+    return a + b + c```
+
+- code:
+
+    ```language
+    1 + 1```
+
+
+Commentary on Function could go here. Example uses too.
+________
+
 
 
 
@@ -1209,3 +1231,79 @@ Subset-matrix-product Problem
 Subset group-operation Problem
 ==============================
 - What structure is shared between different groups (e.g. additive group, multiplicative group)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Program Metadata
+================
+- Name
+- Type/purpose
+    - application
+        - system tool
+            - Tools for working with the file system
+            - Tools for working with pride
+            - Tools for working with the OS
+            - Tools for working with the hardware
+        - settings
+        - development/work/productivity
+            - text/document editors
+            - programming IDE
+            - photoshop
+            - audacity
+        - internet
+            - web browser
+            - email
+            - internet messenger (e.g. discord, slack)
+            - applications that depend exclusively or heavily on internet in order to function
+        - game
+            - tactics/strategy
+            - ...
+        - misc
+    - data/file (suggestion: use radius of the polygon/shape to indicate file size)
+        - configuration file
+        - database
+        - movie
+        - music
+        - picture
+        - shell script
+        - source code
+        - misc
+    - shortcuts?
+        - e.g. documents, downloads, etc
+    - user-specified/custom/pinned/starred
+
+Major split between code and data
+    - use some binary state to indicate the two
+        - use straight lines to indicate code and curved lines to indicate data
+        - use dark colors to indicate code and light colors to indicate data
+cells: 2x2 = 4
+    - supports 4 different indicators of information
+    - color and shape? refer to specific attributes that the
+per cell:
+    - color: assuming changes in increments of 16
+        - 4 bits per each element in RGBA
+            - (2 ** 4) ** 4 = 2 ** 16 = 65536 different possible colors
+        - Can convey 16 bits of information via color
+    - formula for information content: color values ** cell count
+                                    - (2 ** 16) ** cell count
+    - Total information with 4 cells with 2**16 possible color values per cell:
+        - 18446744073709551616 possible states = 64 bits
+    - shape:
+
+
+
+does gravity cause matter to fall through the time dimension, as well as through the space dimensions
+    - and beyond?
+    - where does it stop influencing, and why?
