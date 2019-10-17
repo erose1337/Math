@@ -1,15 +1,12 @@
-from math import log, floor
-
 from utilities import random_integer, big_prime
 
 SECURITY_LEVEL = 32
 
 def generate_parameters(security_level=SECURITY_LEVEL):
     G = 2
-    width = 8
+    width = 256
     w = G ** width
-    p = big_prime(security_level)
-    assert w % p
+    p = (2 ** 256) + 297#big_prime(security_level)
     parameters = {'w' : w, 'G' : G, 'p' : p, "width" : width,
                   "security_level" : security_level}
     return parameters
@@ -17,7 +14,8 @@ def generate_parameters(security_level=SECURITY_LEVEL):
 PARAMETERS = generate_parameters(SECURITY_LEVEL)
 
 def shift(X, shift_count, w=PARAMETERS['w'], p=PARAMETERS['p']):
-    #print X, shift_count, w, p, pow(w, shift_count, p)
+    #print w, shift_count
+    #assert shift_count
     return X * pow(w, shift_count, p) # memoization not found to be helpful
 
 #def concatenate(X, Y, w=parameters['w'], p=parameters['p']):
@@ -52,6 +50,7 @@ def test_arithmetic(parameters=PARAMETERS):
     X = 1
     Y = 2
     XY = add(X, Y, 1)
+    print format(XY, 'b')
     # hard coded test values don't work for varying w
     #assert XY == 513 % parameters['p'], (XY, 513 % parameters['p'], format(XY, 'b').zfill(parameters["width"] * 2), format(513, 'b').zfill(parameters["width"] * 2))
     #print("add/concatenation test passed")
@@ -75,13 +74,18 @@ def test_arithmetic(parameters=PARAMETERS):
     before = time_stamp()
     agreements = 16
     for count in range(agreements):
+        G = random_integer(32)
         x = random_integer(parameters["security_level"])
         y = random_integer(parameters["security_level"])
         xG = scalar_mult(G, x)
         yG = scalar_mult(G, y)
+        assert xG != x
+        assert yG != y
         share_x = scalar_mult(yG, x)
         share_y = scalar_mult(xG, y)
         assert share_x == share_y
+        assert (xG * yG) % parameters['p'] != share_x
+        assert (xG + yG) % parameters['p'] != share_x
         #print("x: {}".format(x))
         #print("y: {}".format(y))
         #print("xG: {}".format(xG))
@@ -92,5 +96,22 @@ def test_arithmetic(parameters=PARAMETERS):
     print("Number of scalar_mults computed: {}".format(agreements * 4))
     print("Time taken: {}".format(after - before))
 
+# Block0 || Block1 || ... || Blockn mod p
+
+def compress(blocks, p=PARAMETERS['p']):
+    output = blocks[0]
+    for block_number, block in enumerate(blocks[1:]): # block_number is off by 1, block_number 0 is for blocks[1]
+        output = add(output, block + block_number + 1, 1, p=p)
+    output = add(output, len(blocks), 1, p=p)
+    return output
+
+def examine_compress():
+    blocks = [0]
+    output = compress(blocks)
+    print compress([0])
+    print compress([0, 0])
+
+
 if __name__ == "__main__":
-    test_arithmetic()
+    #test_arithmetic()
+    examine_compress()

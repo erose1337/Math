@@ -421,6 +421,11 @@ When is a key press registered and acted upon?
         - move up and down rows as needed, while retaining straight across arrangement of fingers
         - In one row, there are 2^9 (512) instantly accessible states
 
+Hold keys to select a category
+    - Use "sustain" key to "turn on" pressed keys, so that they stay held after being released by the operator
+Press keys to select an entry in that category
+    - Accumulate key presses that are held longer than x seconds
+    - Act on key presses that are held less than x seconds
 
 
 Analog table look-up
@@ -933,7 +938,8 @@ except Exception from ...
 
     except KeyError from "self._value_map[value]":
 
-
+    except Exception from callable
+    except Exception from object
 
 
 
@@ -1196,6 +1202,18 @@ a(b^-1) + c(d^-1) = (bd^-1)(ad + bc)
         - surely the problem is no easier than a subset-sum problem
            - n = 1024 for subset-sum problem should provide approximately 128-bit security (post-quantum)
 
+Alternative formulation
+-----------------------
+- Public information: A set of n elements: a, b, c, ...
+- F:
+
+        Set B equal to a random permutation of A
+        output AB
+
+    (Where `AB` denotes the dot product)
+
+
+
 Subset-matrix-product Problem
 -----------------------------
 - Public information: A set of n vectors of length k: a, b, c, ...
@@ -1307,3 +1325,302 @@ per cell:
 does gravity cause matter to fall through the time dimension, as well as through the space dimensions
     - and beyond?
     - where does it stop influencing, and why?
+
+
+
+
+
+
+x + p mod p == x
+x * p mod p == 0
+x ** p mod p == x
+xP mod p == x
+
+
+
+
+
+X || X == 2X mod P
+k || m mod P
+etc
+
+
+Block0 || Block1 || ... || Blockn mod p
+
+
+
+
+> totient(2^n) = 1 * 2^(n - 1)
+> totient(3^n) = 2 * 3^(n - 1)
+> totient(5^n) = 4 * 5^(n - 1)
+> totient(7^n) = 6 * 7^(n - 1)
+> totient(11^n) = 10 * 11^(n - 1)
+> ...
+> totient(p^n) = (p - 1) * p^(n - 1)
+
+totient(k) = product((p - 1) * p^(k - 1))
+                for p, k in factorization())
+
+
+
+
+
+
+c = m + g^(k + iv) mod P
+m = c - g^(k + iv) mod P
+
+c + c = m + m + g^(k + iv) + g^(k + iv)
+      = m + m + 2 * (g^(k + iv))
+      = m + m + g^(k + iv + 1)
+
+c + c + c = 3 * m + 3 * (g^(k + iv))
+        ^-- needs to be brought up one level
+c + c + c + c_0 = 4 * m + 4 * (g^(k + v))
+
+decryption requires keeping track of depth
+
+
+c = m * g^(k + iv)
+cc = m * m * g^(k + iv) * g^(k + iv)
+            g^((k + iv)^2)
+
+
+
+c = m || (k + iv)
+c + c = m + m || (k + iv) + (k + iv)
+      = 2m || 2(k + iv)
+
+c * c = m || (k + iv) * m || (k + iv)
+      = (m + j(k + iv)) * (m + j(k + iv))
+      = mm + mj(k + iv) + mj(k + iv) + (j(k + iv))^2
+      = m^2 + 2mj(k + iv) + (jk + jiv)^2
+      = m^2 || 2m(k + iv) || (jk + jiv)^2
+
+c * c * -1 = m || (k + iv) * -1(m || (k + iv))
+           = m + j(k + iv) * -1(m + j(k + iv))
+           = m + j(k + iv) * (-m - j(k + iv))
+           = -m^2 - mj(k + iv) - mj(k + iv) - (j(k + iv))^2
+
+c+ * c- = m || (k + iv) + -m || (k + iv)
+        = m + j(k + iv) * -m + j(k + iv)
+        = -m^2 + mj(k + iv) - mj(k + iv) + (j(k + iv))^2
+        = -m^2 + (j(k + iv))^2
+        = -m^2 + (jk + jiv)^2
+        = -m^2 + (jk + jiv) * (jk + jiv)
+        = -m^2 + jk^2 + jkjiv + jkjiv + jiv^2
+        = -m^2 + jk^2 + 2jkjiv + jiv^2
+
+
+(a + b)(a - b)
+aa + bb
+
+c+, c- = f(m, k), f(-m, k) (alternatively: f(m, k), f(m, -k))
+       = (m + ...)(-m + ...)
+       = -m^2 + ...k^2...
+       =  m^2 + ...k^2...
+
+(a + k)(a + k)
+aa + 2ak + kk
+
+(a - k)(a - k)
+aa - 2ak + kk
+
+
+(a + b)(a + b)       0, 0
+a^2 + 2ab + b^2      0, 0
+
+(a + b)(a - b)       0, 1
+aa + - bb            0, 1
+
+(a - b)(a + b)       1, 0
+aa + ab - ab - bb    1, 0
+
+(a - b)(a - b)       1, 1
+aa - ab - ab - bb
+aa - 2ab - bb        1, 1
+
+
+
+kM = M || M || ... || M
+
+M = (m || r)
+k(m || r) = (m || r) || (m || r) || ... || (m || r)
+
+
+
+
+
+
+
+
+
+can square both sides of an equation if the signs match
+
+
+
+
+
+ax^2 + by = c
+(ax^2 + by)^2 = c^2
+(ax^2 + by)(ax^2 + by) = c^2
+aaxxxx + axxby + axxby + bbyy = c^2
+aaxxxx + 2axxby + bbyy = c^2
+a^2x^4 + 2ax^2by + b^2y^2 = c^2
+
+
+ax^2 + by = c
+dx^2 + ey = f
+
+aw^2 + bz = g
+dw^2 + ez = h
+
+cw^2 + fz
+w^2(ax^2 + by) + z(dx^2 + ey)
+a(wx)^2 + byw^2 + dzx^2 + eyz
+
+gx^2 + hy
+x^2(aw^2 + bz) + y(dw^2 + ez)
+a(wx)^2 + bzx^2 + dyw^2 + eyz
+
+
+
+ax^2 + by = c
+aw^2 + bz = d
+
+c * w^2
+w^2(ax^2 + by)
+a(wx)^2 + byw^2
+
+d * x^2
+x^2(aw^2 + bz)
+a(wx)^2 + bzx^2
+
+c * d = (ax^2 + by)(aw^2 + bz)
+      = aa
+
+
+
+
+obfuscate function calls/indexing by creating a function/datatypes that switch the behaviors of __call__ and __getitem__
+
+
+
+
+
+(from: https://en.wikipedia.org/wiki/Dihedral_group)
+> The product of two rotations or two reflections is a rotation; the product of a rotation and a reflection is a reflection.
+                  f(0, 0) -> 0        f(1, 1) -> 0                   f(0, 1) -> 1         f(1, 0) -> 1
+can use rotation/reflection status to represent bits of information
+
+
+
+
+
+
+
+g^x mod p = pq + r
+             ^ what information can we gather about how q changes as x goes from 0, 1, 2, ...
+
+
+
+public parameters:
+    a set of prime numbers
+    a scalar `g`
+operation:
+    select a subset of prime numbers
+    set n = product(primes)
+    output x = g mod n
+problem:
+    given `set of primes`, `g` and `x = g mod n`, output `n`
+solution:
+    g = nm + x
+    g - x = nm
+    factorization(g - x) = factorization(nm)
+    output product(factor for factor in factorization(g - x) if factor in set)
+mitigation:
+    add small noise term to `n`
+modified operation:
+    select a subset of prime numbers
+    set n = product(primes)
+    output x = g mod (n + e)
+problem:
+    given `set of primes`, `g`, and `x = g mod (n + e)`, output `n`
+solution:
+    g = (n + e)m + x
+    g - x = m(n + e)
+    factorization(g - x) = factorization(m(n + e))
+                         = factorization(m), factorization(n + e)
+    problem:
+        given `set of primes` and `factorization(n + e), output `n`
+    solution:
+        ?
+problem:
+    given `set of primes`, `g`, `x = g mod (n + e)`, output `n`
+solution:
+    g mod (n + e) = g - r mod n; r = (g / n) * e
+    g - r = nm + x
+    - r = nm + x - g
+    -(g/n) * e = nm + x - g
+    -(1/n) * e = (nm + x - g) / g
+
+problem:
+    given `set of primes`, `n + e`, output `n`
+
+
+
+
+
+
+found on https://matheducators.stackexchange.com/a/17150 :
+
+      1         1         2
+    ------ + ------- = --------
+    1 − t     1 + t    (1 - t^2)
+
+
+
+
+
+given n, find a group with order n
+
+
+
+
+- linear function: symmetric
+- quadratic function: symmetric
+    - even power functions: symmetric
+- cubic function: symmetric
+    - odd power functions: symmetric
+- sin function: symmetric
+- some combinations of the above: asymmetric
+
+How/Why?
+
+
+
+
+
+
+
+
+public parameter: P
+private key: a, b < P
+public key: a^2 + b^2 mod P
+private key operation:
+    generate secondary private key c, d
+    compute secondary public key c^2 + d^2 mod P
+    output secondary public key, ac - bd as 'e', ad + bc as 'f'
+public key operation:
+    compute third public key via (public_key * public_key_2) mod P
+    if e^2 + f^2 mod P == third public key output True
+    else output False
+correctness:
+    (a^2 + b^2) * (c^2 + d^2) = (ac - bd)^2 + (ad + bc)^2
+                              = (ac + bd)^2 + (ad - bc)^2
+    (brahmagupta-fibonacci identity)
+
+
+
+
+
+for a permutation on a set of n elements, there are n! possible permutations
