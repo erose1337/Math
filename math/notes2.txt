@@ -788,6 +788,15 @@ module.y # raises Exception```
 - is an NP-Complete problem
 - from https://cstheory.stackexchange.com/a/14147/53055
 
+ax^2 + by − c = 0
+ax^2 + by = c
+
+m := b
+r := a
+
+rx^2 + my = c
+
+
 
 
 
@@ -1624,3 +1633,119 @@ correctness:
 
 
 for a permutation on a set of n elements, there are n! possible permutations
+
+
+
+
+
+symbol recognition
+given optimal representation of symbol to start with (e.g free of any noise)
+
+
+- feedback is crucial
+    - optimize for quality of feedback
+- being able to score your own results is beneficial
+    - need to know "correct" answer ahead of time
+        - search situation
+
+- being able to make small variations of a known-answer problem could be useful
+    - e.g. take optimal representation of '0', add noise or apply transformations to it, try recognizing the noisy version
+    - possible transformations:
+        - add noise
+        - scale/zoom
+        - blur
+        - skew
+
+given a noisy thing and a set of things, determine which thing in the set the noisy thing was
+    - error correcting codes?
+        - could be useful for designing an alphabet of symbols that is easy to recognize
+        - don't appear to be useful if the set of things is predefined?
+
+
+
+
+
+
+
+    # x(y + 1) is x(yr + m) with r = m = 1
+    # small r is amenable to scalar multiplication
+
+
+
+E(m, k) * E(m, k) == E(m, k)^2
+x = E(m, k)
+x^2 mod N
+given N, x^2, output x
+m = isqrt(m^2)
+problem: E is randomized
+solution:
+    - naive solution: compute `y <- E(m, k)` until y^2 == x^2
+        - how many different ciphertexts for any given `m` are there?
+            - depends on size of randomizing factor of cryptosystem
+            - use a deterministic transformation instead?
+F^-1(F(m) * F(m)) == m^2
+given N, x^2 mod N, output x
+m^2 = F^-1(x^2)
+m = isqrt(m^2) # pretty sure this won't work unless the range of `m` is restricted
+
+
+non-commutative function: F(a, b) -> b * (a * b mod p) mod q
+    - commutes for small a, b
+    - x * F(a, b) mod p = F(ax, b) mod p
+    - 2 * F(a, b) = F(a, b) + F(a, b) = F(a, b + b mod p) mod p
+        - 2 * F(a, b) \equiv F(a, b + b) mod p
+    - F(a, b)^2 = F(a^2, b^2) if (ab)^2 < p
+    - b^-1 * F(a, b) mod p == b^-1 * F(a, b) mod q (where inverse is defined mod p and mod q respectively)
+        - c = F(a, b)
+
+        - d = b^-1 mod q          <- inverse is generated mod q
+        - d * c mod p = a mod p   <- used mod p
+
+        - d = (b^-1) ^ 2 mod p    <- inverse is generated mod p and squared
+        - a = c * d^2 mod p       <- used mod p
+
+- do inverses exist?
+    - e.g. F(F(x, y), -y) = x
+           F(x, -x) = 0
+
+one argument variant: F(a) -> a (a mod p) mod q
+- F(a)F(b) = F(ab)
+    - F(a)^x = F(a^x)
+    - F(a)F(a) = F(a
+- x^2 * F(a) = F(ax) ?
+
+
+- p > q has different effect than q > p
+- if p is larger than q:
+    - h(x) -> x * (x mod p) mod q is equal to x^2 mod p
+    - y^2 * h(x) mod p == x^2 * h(y) mod p
+        - implies h(x) -> x^2 mod p
+- if p is smaller than q:
+    - f(x) -> x * (x mod p) mod q is not equal to x^2
+
+b( ga mod p) mod q
+y( gx mod p) mod q
+
+a (ga mod p) mod q
+x (gx mod p) mod q
+
+ax (gx mod p) mod q
+ax (ga mod p) mod q
+
+b (b mod p) mod q
+x (x mod p) mod q
+
+bx(b mod p) mod q
+bx(x mod p) mod q
+
+bx(b mod p)
+
+
+pub_a = a (a mod p) mod q
+pub_b = b (b mod p) mod q
+
+ab (b mod p) mod q = a * pub_b
+ab (a mod p) mod q = b * pub_a
+
+ab(b mod p)(a mod p)
+ab(a mod p)(b mod p)
