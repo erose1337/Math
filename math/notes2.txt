@@ -196,8 +196,6 @@ Are there sums of two squares that are not the product of two sums of two square
 The set of all information exists
 The simplest operation is `copy`
     - e.g. basis of life is self-replication, an organism creating copies of itself is a pattern of information making copies of itself
-    - `copy` is the same thing as `mov`
-        - `mov` is arguably mis-named
 - mechanisms for storage of information needed
 
 Expressive programming language
@@ -1713,6 +1711,7 @@ one argument variant: F(a) -> a (a mod p) mod q
     - F(a)^x = F(a^x)
     - F(a)F(a) = F(a
 - x^2 * F(a) = F(ax) ?
+- properties apply only for small a, b (ab < p ?)
 
 
 - p > q has different effect than q > p
@@ -1749,3 +1748,852 @@ ab (a mod p) mod q = b * pub_a
 
 ab(b mod p)(a mod p)
 ab(a mod p)(b mod p)
+
+
+F(a) = a^2 - a*p*r (mod q)
+     (ab)^2 - apr - bps
+     (ab)^2 - p(ar - bs)
+
+a^2 - apr = a(a - pr)
+
+
+
+
+p
+for all a: a = pq + r
+rewrite all variables in terms of p
+
+ax + e mod p
+
+(pq + r)(ps + t) + (pu + v) mod p
+ppqs + pqt + prs + rt + pu + v
+ppqs + pqt + prs + pu + rt + v
+p(pqs + qt + rs + u) + rt + v = pq(ps + t) + p(rs + u) + rt + v
+                              = p(q(ps + t) + (rs + u)) + rt + v
+                              = pz + rt + v
+                                     if rt + v < p, pz + rt + v mod p = rt + v
+                                     r, t, v are all p-sized. Some rt + v will be larger than p, others smaller
+
+
+public vector x
+secret permutation matrix K (alternatively, secret invertible matrix)
+public key operation:
+    Kx * x
+where a * b is the inner product between two vectors a and b, and Kx is the matrix product of K with x
+example:
+
+     x = 3,   some vector
+         10,
+         7,
+         11
+
+     K = [0, 1, 0, 0]   transposition matrix
+         [1, 0, 0, 0]
+         [0, 0, 1, 0]
+         [0, 0, 0, 1]
+
+           3 10  7 11
+     Kx = [0, 1, 0, 0] -> 10     shuffles the vector
+          [1, 0, 0, 0] -> 3
+          [0, 0, 1, 0] -> 7
+          [0, 0, 0, 1] -> 11
+
+     Kx * x = 3   10   7  11     dot product
+             10    3   7  11
+             30 + 30 + 14 + 22 = 60 + 26 + 86
+
+(a * u) + (a * v) = (ax + by + cd + ...) + (ar + bs + ct + ...)  (where * is inner product as above and + integer addition)
+                  = a(x + r) + b(y + s) + c(d + t)
+F(K, x) -> x * Kx
+        -> x * r
+F(K, x) + F(J, x) = (x * Kx) + (x * Jx)
+                  =  (x * r) + (x * s)
+                  =  x * (r + s)        = F(K + J, x) where + is entry-wise addition
+n * F(K, x) -> F(n * K, x)   (right * means multiply each element of K by the value n)
+
+F(K, x) * F(J, x) = (ax + by + cz) * (aq + br + cs)
+                  = ax(aq + br + cs) + by(aq + br + cs) + cz(aq + br + cs)
+
+F(K, x) + F(K, y) = (ax + by) + (cw + dz)
+
+F(K, x + y) = (a + c)x + (b + d)y
+            = ax + cx + by + dy
+
+F(K, x * y) = acx + bdy    where * is element-wise multiplication
+
+longer vector -> larger matrix
+vector of bits
+    test the hamming weight to ensure K is not used on low-weight or specially crafted states
+
+y * F(K, x) = F(K, x * y)     where x * y is the application of the scalar y to the elements of the vector x
+                              and y * F(K, x) is the scalar multiplication of y with the value F(K, x)
+
+y * F(K, x) = F(K, x) + F(K, x) + ...
+
+    F(K, x) + F(K, x) + ...     ; F(K, x) + F(J, x) -> F(K + J, x)
+    F(K + K + ..., x)
+    F(K * y, x)
+
+y * F(K, x) = F(K * y, x) = F(K, x * sqrt(y))
+y^2 * F(K, x) = F(K, x * y)
+
+
+properties:
+    F(K, x) + F(J, x) = F(K + J, x)
+    y * F(K, x) = F(K * y, x) = F(K, x * y)
+
+
+
+ 1     1     a + b           f(a, b)   additive group operation
+--- + --- = ------
+ a     b      ab             g(a, b)   multiplicative group operation
+
+
+
+ 1     1    g^(a + b)
+--- * --- = ----------      ?
+g^a   g^b    g^ab
+
+
+               g^(a + b)
+g^-a * g^-b = ---------- ?
+                g^ab
+
+
+         1     1      2x
+F(x) -> --- + --- = -------  mod p
+         x     x      x^2
+
+F is a bijection, an invertible permutation of elements mod p
+F is an involution, `F(F(x)) = x`
+F(x) * F(y) = F(x) if x * y equiv 2x mod p
+F(x) * F(y) = F(xy / 2)
+F(x) = 2/x
+
+
+
+
+ Strange behavior in python
+ ==========================
+
+     x = range(8)
+     x[:] = (x for x in range(8))
+     print x
+
+
+    # variables used in a list comprehension can be referred to afterwards
+    [x for i, x in enumerate(iterable)]
+    assert i == len(iterable) - 1
+    assert x == iterable[-1]
+
+
+
+ Given:
+ - public prime modulus p
+ - assumed known/chosen message m in (0, 1)
+ - fixed uniformly random value x mod p
+ - per-message uniformly random r such that 2r <= p - 1
+
+    x(2r + m) mod p
+
+ is almost uniformly random mod p
+
+ How many plaintext-ciphertext pairs are required to break the scheme?
+
+
+
+
+
+
+
+
+
+
+
+    0  1  2  3  4  5  6  7  8  9  10  11  12  13  14  15  16  17   ... = infinite vector `v`
+    0  0  1  1  0  1  0  1  0  0  0   1   0   1   0   0   0   1    ... = infinite binary vector `p`
+
+    define: bprime(k) -> The smallest subsequence of `p` that has weight k
+
+Find a function that generates bprime(k)
+    - Easy!
+
+    > The Berlekamp–Massey algorithm is an algorithm that will find the shortest linear feedback shift register (LFSR) for a given binary output sequence.
+    > The algorithm will also find the minimal polynomial of a linearly recurrent sequence in an arbitrary field.
+
+(from https://en.wikipedia.org/wiki/Berlekamp%E2%80%93Massey_algorithm )
+
+    - (side note: Can we use this algorithm on micks shortest superstring problem?)
+
+The polynomial so obtained does not have to predict the position of any primes larger than those it came from
+
+- What can we do with these polynomials?
+- What properties do they have?
+- How do the polynomials change as k increases?
+
+
+
+
+
+
+Focused sunlight
+================
+Use a parabolic reflector or a lens to focus light to a point
+
+Light welding
+-------------
+- Focus lens/parabola into receiving end of fiber optic cable
+- Point output end of cable towards area to be welded
+- The heat from the light melts the metal
+    - probably the fiber cable too!
+
+Creating buildings from sand and sunlight
+-----------------------------------------
+- Could create houses in a desert by using focused sunlight to fuse sand into glass
+- Sand would be a relatively cheap and abundant building material
+- Could conceivably also include rocks/metals/materials if available and necessary (for strength, chip resistance, etc)
+- Create construction materials of a given form (a post, a wall, etc) by dumping sand into a template and fusing it
+- Easily fix chipped/broken areas by dumping sand and sunshine on it
+
+Stellar forge
+-------------
+- Focused sunlight on a massive scale
+- Giant reflector in space
+- Focuses huge amount of sunlight to an area
+- Creates extremely high temperature (and who knows what other weird side effects)?
+- Useful for joining/creating materials that require incredible temperature
+
+Interstellar beacon/lighthouse
+------------------------------
+- Direct an anomalous or detectable amount of sunlight towards a given direction in the universe
+- Create a universal compass?
+    - Send out lines in all basic directions
+    - Travel along the light beam
+- Use the light beam for propulsion?
+    - Focused light solar sail?
+- Universal internet
+    - think of all the alien kitty cat pictures!
+    - Bad news: ping would be *terrible*
+
+
+General-purpose energy source (heat)
+------------------------------------
+- Myriad of ways to turn heat into useful energy
+
+What would happen if a star were to enclosed by a spherical parabolic reflector?
+    - All light would be reflected towards a point at the center of the star
+
+
+
+
+
+Reeds-Sloane (generalized Berlekamp-Massey) algorithm
+-----------------------------------------------------
+- note: Will abbreviate as SRA as opposed to RSA to minimize confusion
+
+    > Find shortest linear recurrence that can generate a sequence ... (where elements of the sequence are integers mod m)
+
+
+
+Given some expression `H(G(F(a, b), c), ...)` e.g. `a + b * c + d`, it can be viewed as a data vector and an operation (or code) vector
+
+          (((a + b) * c) + b)
+    data     0   1    2    1  = [0, 1, 2, 1]
+    code       0    1    0    = [0, 1, 0]
+
+
+         F(G(F(a, b), c), b)
+    data       0  1   2  1   = [0, 1, 2, 1]
+    code 0 1 0               = [0, 1, 0]
+
+
+(N_1(x), x=0) = SRA(natural numbers)
+(N_2(x), x=0) = SRA(even natural numbers)
+(N_3(x), x=1) = SRA(odd natural numbers)  ?N3 might be N2 just offset by one?
+(N_square(x), x=0) = SRA(squares)
+
+
+
+
+
+
+(g^x mod p, x=) = SRA( g^(g^(g^x)...) )   *can evaluate knowing only g, p, g^x mod p
+
+
+
+
+Given a set of rules and a goal to optimize, many learning algorithms will find ways to cheat around the rules.
+Can we rely on and employ this behavior instead of viewing it as an undesirable side effect?
+    - Can we generate AI whose purpose is finding ways to skirt around some given rules?
+        - Can we use this to improve a set of rules and make them "tight" to where they cannot be gamed/cheated anymore?
+
+
+
+given: m, m2, m3
+randomly select `w` and note that:
+    m = w + x
+    m2 = x + y
+    m3 = y + z
+c = f(inverse_ft(w, x, y, z), k)
+
+given: m
+randomly generate `ri` such that:
+    m = r0 + r1 + r2 + ...
+c = f(inverse_ft(r0, r1, r2, ...), k)
+      inverse_ft(r0, r1, r2, ...) + k
+      inverse_ft(r0, r1, r2, ...) * k
+      inverse_ft(r0, r1, r2, ...) ? k
+
+
+higher degree variant of autoproduct
+given: S = a, b, c, d, e
+
+    v0 = S
+    v1 = permutation(S) # stop here and it is the regular autoproduct
+    v2 = permutation(S)
+    v3 = permutation(S)
+    ...
+    output = dot_product(v0, v1 * ...) where `vx * vy` indicates a vector whose contents are the element-wise product vx_0 * vy_0, vx_1 * vy_1, ...
+
+amount of information in (v1, v2, v3, ..., vn): |S|!^n
+
+
+
+Autoproduct with public matrix and secret vector
+
+    F(G, k) -> Gk * k
+    k = a, b, c, d
+    Gk = c, b, a, d
+    Gk * k = c b a d
+             a b c d
+             ac + bb + ac + dd
+
+    k2  = e, f, g, h
+    Gk2 = g, f, e, h
+    Gk2 * k2 = e f g h
+               g f e h
+               eg + ff + eg + hh
+
+
+             aa + bb + cc + dd
+             ab + bc + cd + ad
+             ac + bd + ca + bd
+             ad + ba + cb + cd
+
+
+Autoproduct-like where the shuffled vector is entry-wise added to the input vector, and the product of that vector is the output
+
+product(element for element in Pv + v)
+
+v = a, b
+
+(a + b)(a + b)deeeeeeeeeeeeeeeeevvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvewwwww
+(a + a)(b + b)
+
+Keep the matrix and the vector fixed
+Add a third argument for a short vector
+
+    M = permutation matrix
+    g = public vector
+    s = secret random short vector
+
+    v = entrywise_product(g, s)                      ax, by, cz
+    v = Mv                    Matrix multiplication  cz, by, ax
+    output g * v              Dot product         acxz + bbyy + acxz = 2axcz + bbyy
+                              Anti-dot product
+
+
+
+
+Can the autoproduct be used for a key agreement scheme?
+=======================================================
+
+Idea 1
+------
+- Public random permutation matrix 'K`
+- private key: X = x * K (entry-wise product of scalar with elements of a matrix)
+- public key = F(X, G) (autoproduct)
+- shared secret = x * F(Y, G)
+    - correctness comes from the identity `n * F(K, x) -> F(n * K, x)`
+- problem: F(X, G) = x * F(K, G)
+    - easy to divide by F(K, G) since it is public information
+- solution:
+    - change one term so that the relation is still mostly true
+    - make it slight larger
+
+Idea 2
+------
+- Public random permutation matrix `K`
+- private key:
+
+    generate random x
+    set X = x * K; (entry-wise product of scalar with elements of a matrix)
+    set X[0][i] += e  (addition of `e` to the value at position where K[0][i] == x)
+    output e
+
+- public key: F(X, G) (autoproduct)
+- shared secret: msb(e * F(Y, G))
+
+
+- make one of the coefficients in the autoproduct matrix slighter larger than the others
+    - makes the msb stick out above others
+        - or maybe not, depending on the number of carries (determined by dimension) and how much larger the coefficient is made
+
+
+
+
+
+
+
+
+  x      x mod (p - 1) = x mod (qrs...) = crt(x mod q, x mod r, x mod s, ...)
+g^   = g^                                                                     mod P
+
+
+
+
+Discrete convolution operator/cellular automaton
+=============================
+For each cell in the automaton, "soak up" values from nearby points that have sufficient value to distribute
+
+- No action when a cell and its neighbors all have the same value
+    - require difference in value for propagation
+    - uniform neighborhoods remain stable and do not change for some time
+- Conservation of sum(|value| for value in values)
+    - A point has sufficient value to distribute if `abs(point value) >= number of points neighbors`
+- For every action, there is an equal and opposite reaction
+    - if `1` is taken from the center and distributed to the left cell, a `1` is also taken from the center and distributed to the right cell
+    - (see example below)
+- Can also work in dimensions smaller/larger than 2
+- should it be allowed to take a maximum of 1 value per neighbor per update?
+    - e.g. if a cell has the value `k=64`, the neighbors could absorb 8 points each
+    - should the number of points absorbed per update be limited or not?
+- adding value to a cell does not have an immediate effect (no change until `k > n`)
+
+Example (Moore neighborhood)
+----------------------------
+
+
+    0   0   0         1   1   1        0   0   0
+
+    0   8   0     ->  1   0   1    ->  0   8   0
+
+    0   0   0         1   1   1        0   0   0
+
+
+Neighborhoods
+-------------
+- Choice of neighborhood determines number of neighbors
+- Moore neighborhood consists of the points in the square-oid around the target point
+- Von Neumann neighborhood consists of the points adjacent to the target point
+
+    0  0  0      0  1  0
+    0  4  0  ->  1  0  1
+    0  0  0      0  1  0
+
+
+Boundary vs no boundary
+-----------------------
+A boundary implies that edges and corners will have fewer neighbors than points in the middle do.
+    - Values do not "wrap around" at the edges
+No boundary implies a finite but endless automaton (e.g. a sphere, torus, etc)
+    - Values "wrap around" at the edges
+
+
+Viewing the transformation with linear algebra
+-----------------------------------
+What is the linear algebra transformation that performs the following mapping?
+`k` indicates the value of the center cell (in the example, `k = 8`)
+`n` indicates the number of neighbors in the neighborhood (2d moore neighborhood `n = 8`)
+
+    0   0   0         1   1   1
+
+    0   8   0     ->  1   0   1
+
+    0   0   0         1   1   1
+
+
+    0   0   0         0   0   0
+
+    0  k<n  0     ->  0   k   0
+
+    0   0   0         0   0   0
+
+
+
+
+    0   0   0          |  k/n       k/n        k/n|
+                       |                          |
+    0   k   0    +     | k/n    -(n * (k/n))   k/n|  = ...
+                       |                          |
+    0   0   0          |  k/n       k/n        k/n|
+
+
+                   (   | 1/n        1/n         1/n|)
+                   (   |                           |)
+                 + (k *| 1/n   -(n * (k/n))/k   1/n|)  = ...       # extra / k term in middle cancels out scaling by k
+                   (   |                           |)
+                   (   | 1/n        1/n         1/n|)
+
+
+
+                       |  8/8       8/8        8/8|
+                       |                          |
+        ...        +   | 8/8    -(8 * 8/8)     8/8|  = ...
+                       |                          |
+                       |  8/8       8/8        8/8|
+
+
+                       | 1       1      1|
+                       |                 |
+        ...        +   | 1      -8      1|  = ...
+                       |                 |
+                       | 1       1      1|
+
+
+Optimization
+------------
+
+
+        n1        n2       n3
+
+        n4        n5       n6
+
+        n7        n8       n9
+
+
+Each `n` is a 3x3 neighborhood
+The collection above of such n can also be viewed as a 3x3 neighborhood
+Replace each neighborhood with the sum of the values in its cells
+Apply discrete convolution to the matrix so obtained
+
+Can be used to estimate larger scale value changes in less time than evaluating all of the cells individually
+    - is only an approximation
+        - implicitly assumes/requires that each `ni` neighborhood be relatively uniform in its values
+            - deviation from this assumption results in lower accuracy
+
+
+
+
+
+
+
+
+Computing primorial mod k to compute n! mod k
+
+11!
+
+1   2   3   4   5   6   7   8   9   10    11
+
+
+                            2
+            2               2
+1   2   3   2   5   2   7   2   9   2    11    How many 2s?
+
+bottom row: 5 = 11 / 2 = 11 / 2^1
+second row: 2 = 11 / 4 = 11 / 2^2
+top row: 1    = 11 / 8 = 11 / 2^3 = 11 / 2^x where 2^x < n
+total: 8
+              = (n / 2^1) + (n / 2^2) + (n / 2^3)
+              = (n / p^1) + (n / p^2) + ... + (n / p^x)
+
+            (n/p^i > 0)
+              Sigma    (n / p^i)
+      n          i
+   Product    p^
+      p
+
+
+2
+2
+2
+2
+2  3
+2  3
+2  3  5
+2  3  5  7
+
+Accumulate primorial(7) mod n      # accumulate multiplies the stored product by the operand
+Accumulate primorial(5) mod n
+Accumulate primorial(3) ** 2 mod n
+Accumulate 2 ** 4 mod n
+Output result
+
+
+
+Given k * (2*r + m) mod P
+where:
+    - P is a prime number
+    - k is a persistent secret uniformly random mod P and is invertible mod P
+    - r is an ephemeral secret uniformly random in some range Q and has some constant factor y
+        - In the example above, the constant factor y=2, i.e. r is even
+    - m is a public, potentially adversarially controlled, bit in (0, 1)
+
+What is the cost of obtaining any of `k, r, m` given `k * (2*r + m)`?
+How many samples are required?
+How does the number of required samples change as the size of `r` decreases and the size of y increases?
+
+
+
+
+
+
+
+single form linearization ("monomorphic linearization")
+-------------------------------------------------------
+For all n, p:
+
+    n = (p * q) + r
+
+for: some q
+     some r < p
+
+
+Rewrite any/all terms:
+
+    ax + by    (arbitrary expression)
+
+in terms of a single variable `p`:
+
+    ax = pq + r
+    by = ps + t
+
+    ax + by = pq + r + ps + t = p(q + s) + r + t = pu + v
+
+
+
+
+
+
+
+
+
+
+              .
+
+           .     .
+
+      .   -      -   .
+    .                  .
+      .   -      -   .
+
+          .      .
+
+             .
+
+x^2 + 4(x(x + 1) / 2)
+x^2 + 2(x(x + 1)
+x^2 + 2x(x + 1)
+x^2 + 2x^2 + 2x
+3x^2 + 2x
+
+
+
+
+
+Can get MSB(d) via modular_inverse(e, (n & upper_bits) + 1)
+The least significant bit of d is 1 because d must be odd as it is coprime to the totient
+
+>>> p
+73759451544113484607788934619926785385530373967988168487873669857444050985719L
+>>> q
+27246121825720763563663761721328265745241721034895383907971358153565129016037L
+>>> n
+2009659002569263488397899443904890452555744659601185475238515677069177008097241041082324165434462810005656169542597667163014723303356379810345638408975603L
+>>> t
+2009659002569263488397899443904890452555744659601185475238515677069177008097140035508954331186291357309314914491466895068011839750960534782334629228973848L
+>>> d
+1339772668379508992265266295936593635037163106400790316825677118046118005398093357005969554124194238206209942994311263378674559833973689854889752819315899L
+>>> d3 = modular_inverse(e, ((n >> 258) << 258) + 1) # zero out lsb, except for 1 (d must be odd)
+1339772668379508992265266295936593635037163106400790316825677118046118005397997308273733884034697531261053634179426086320278123293223669984263741229760513L
+>>> e
+3
+
+assert (((e * d3) - 1) * d3) % t ==  -((k - (e * k * k))) % t
+
+# y = -ek^2 + k = ek^2 + k        # -k^2 = k^2
+                = kke + k
+                = k(ke + 1)
+
+# solve quadratic equation for y?
+
+
+guess at factors of totient
+what is the cost of guessing the easy factors of the totient
+    - "easy" factors are of the form `p^x` for a prime `p` smaller than some bound
+    - k = upper limit on number of primes to test for
+        - e.g. k=256 means only look for primes that are less than 256
+        - factors are k-easy if they are smaller than the bound k
+    - How many factors are there?
+        - the sum of the exponents of the factors
+            - 4 * 9 = 2^2 * 3^2
+                       (2 +   2) = 4
+        - alternatively: count the number of items in the "expanded" factorization:
+            - "expand" the factorization p1^x, p2^y, ... into p1, p1, p1, ..., p2, p2, p2, ...
+                - 4 * 9 = 2^2 * 3^2 = 2 * 2 * 3 * 3
+                                      1 + 1 + 1 + 1 = 4
+        - denote by #f(n) the number of factors of n
+    - How may factors are there on average?
+
+    - Can prune values that are multiples of `e`
+        - e must be coprime to the totient
+
+    - The more factors there are, the smaller they must be for a given size
+
+    - What is the probability of the totients factorization including a given prime `p`?
+        - p is a factor of `1/p` numbers
+            - there is a `1/p` chance that a given number is divisible by `p`
+        - Given that `p` is a factor of `t`, what is the probability that q is also a factor of `t`
+            - 1/p * 1/q = 1/pq
+    - The chance that n has one of the first k primes as a factor tends towards `L=~94-95%` as k grows
+        - Given that `n` has one of the first k primes as a factor, what is the chance that it has a second prime factor < k?
+            - L ** 2
+        - What is the chance that `n` has `x` prime factors that are less than `k`
+            - L ** x
+
+- Find the totient `t` by guessing its factors
+- Compute d' = modular_inverse(e, (n - lower_bits) + 1)
+    - msb(d') == msb(d)
+- Guess the totients easy factors
+    - build a list/table of all numbers with k-easy factorization for some value k
+    - amenable to pre-computation and parallelization
+- For each number `i` in the list:
+    - find the largest `x` such that `log2(ix) = log2(t)`
+    - option 1: set d" = modular_inverse(e, n + ix) and check if m^e^d = m mod n for some m
+        - if yes, output d'' and/or ix
+    - option 2: factor `ix`?
+        - (p - 1) and (q - 1) still have at least one non-easy factor each
+        - end up with another hard factorization problem of slightly smaller size
+
+
+
+
+(p - 1)(q - 1) = pq - p - q + 1
+               = (2ab)(2cd)
+               = 4abcd
+
+
+
+
+
+
+
+
+
+
+        0000
+        0000
+        0000
+        0000
+
+        ^ work on one column at a time; set bits to maximize difference between rows
+          assume each column should have half of the bits set
+             - is this actually optimal? do good codes necessarily have that feature?
+          use distinct pattern in each column
+
+
+        0000    0000   0010    0011
+        0000    0100   0110    0110
+        1000    1100   1100    1100
+        1000    1000   1000    1001
+        ^        ^       ^        ^
+
+        possible sequences (written here as rows, but used in the columns above):
+            0000    unusuable due to hamming weight
+            0001    unusuable
+            0010    unusuable
+            0011    used in column 3
+            0100    unusuable
+            0101
+            0110    used in column 2
+            0111    unusuable
+            1000    unusuable
+            1001    used in column 4
+            1010
+            1011    unusuable
+            1100    used in column 1
+            1101    unusuable
+            1110    unusuable
+            1111    unusuable
+
+        usable values: 0011 0101 0110 1001 1010 1100
+        used values:   0011      0110 1001      1100
+            - 3 values are simple rotations of the same value
+            - replace 0110 and 0011 with the more distinct 0101 and 1010
+
+         0000   0000   0010   0011
+         0000   0100   0100   0100
+         1000   1000   1010   1010
+         1000   1100   1100   1101
+
+
+
+public key : K = a^2 + b^2
+private key: a, b
+sign:
+    X = x^2 + y^2
+    r = h(X || m)
+    R = r^2 + r^2
+    signature = X, c, d such that c^2 + d^2 = K * S * R
+     = (a^2 + b^2) * (x^2 * y^2) * (r^2 + r^2)         # expand terms
+     = ((ax - by)^2 + (ay + bx)^2) * (r^2 + r^2)       # brahmagupta-fibonacci identity
+     = (j^2 + k^2) * (r^2 + r^2)                       # rename terms
+     = (jr - kr)^2 + (jr + kr)^2                       # brahmagupta-fibonacci identity
+       (jr - kr), (jr + kr) = c, d                     # knowing a, b, x, y, r, allows computation of c, d
+    output S
+verify:
+    r = h(X || m)
+    R = r^2 + r^2
+    S = K * X * R
+    if c^2 + d^2 == S:
+        output True
+    else:
+        output False
+
+
+
+https://en.wikipedia.org/wiki/Dot_product
+
+> the cosine of the angle of two vectors is the quotient of their dot product by the product of their lengths
+
+
+
+
+Mx + x
+Mx . x
+
+
+
+F(x, y) ->     1/x + 1/y = (x + y)/xy
+
+
+ 1     1      k + m
+--- + --- = ----------
+ k     m       km
+
+e * F(k, m) = e/k + e/m
+e * F(k, l) = e/k + e/l
+                         +
+              e/k + e/k + e/m + e/l
+              2(e/k) + e/m + e/l
+              2k + m + l
+
+
+ e * F(k, m) = e/k + e/m
+ e * F(k, l) = e/k + e/l
+                         *
+               e(1/k + 1/m) * e(1/k + 1/l)
+               ee(1/k + 1/m)(1/k + 1/l)
+               (1/k + 1/m)(1/k + 1l)
+            (k + m)     (k + l)
+            -------  * ---------
+              km          kl
+
+            (k + m)(k + l)  = kk + kl + km + ml = kk + k(l + m) + ml
+            --------------
+                kkml
+
+
+
+E(k, m) -> c = 1/k + 1/(k + m) = k + k + m / k(k + m)
+D(k, c) -> m = 1/(c - 1/k) - k
