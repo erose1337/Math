@@ -68,7 +68,8 @@ def test_kem():
     after = timer()
     taken = after - before
     print("Time taken to unencapsulate {} {}-bit keys: {}".format(iterations, int(log(s, 2)), taken))
-
+    key_size = sum(log(x, 2) for x in public_key)
+    print("Public key size: {} bits ({} bytes)".format(key_size, key_size / 8))
     #with open("G.txt", "wb") as _file:
     #    _file.write(',\n'.join(str(item) for item in G))
     #    _file.flush()

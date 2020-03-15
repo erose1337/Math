@@ -68,15 +68,18 @@ def print_state(matrix):
     print '\n'.join(str(row).replace(", ", " ") for row in matrix)
 
 def test_discrete_convolution():
-    m = [[0, 0, 0, 0, 0],
-         [0, 0, 0, 0, 0],
-         [0, 0, 8, 0, 0],
-         [0, 0, 0, 0, 0],
+    from utilities import slide
+    m = [[1, 0, 0, 0, 0],
+         [1, 8, 0, 0, 0],
+         [0, 0, 64, 0, 0],
+         [0, 0, 0, 64, 0],
          [0, 0, 0, 0, 0]]
+    m = [chunk for chunk in slide(range(25), 5)]
     print_state(m)
     while True:
+        m = discrete_convolution_push(m)
         #m = discrete_convolution_pull(m)
-        m = basic_average(m)
+        #m = basic_average(m)
         print
         print_state(m)
         raw_input()

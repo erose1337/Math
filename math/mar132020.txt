@@ -1,0 +1,38 @@
+- Speech
+    - The information (the words) are local in space and time
+        - if you are there when someone says something, you do hear it
+        - If you are there before/after someone says something, you do not hear it
+        - if you're not there when someone says something, you do not hear it.
+- Writing
+    - (Space): The information exists locally (e.g. inside a book)
+    - (Time): The information persists and exists in a given interval of time
+        - The time between when the book exists and when it becomes indecipherable
+        - Is local to that interval of time
+- Internet
+    - (Space): The information exists globally
+    - (Time): The information persists and exists in a given interval of time
+        - Arguably forever (e.g. archive.org)
+
+
+On the time taken for information to move from the mind into the world
+======================================================================
+Organized by `information/second`:
+
+- Chiseling into stone
+- Writing by hand
+- Typing (traditional keyboard)
+- Speaking
+    - Whether speaking is faster than typing depends on many factors
+- Pictures
+    - May take a very long time to produce
+    - Receiving/parsing the information may be much faster
+        - "A picture is worth a thousand words"
+
+What comes next in the series?
+
+- Typing (Non-traditional keyboard) (Chording keyboard?) ?
+    - Completely re-design what a keyboard should be
+    - Optimize keyboard layout and finger movement to maximize efficiency
+- "Neural" brain-based interface?
+    - Sounds sci-fi, but lots of work has already been done
+    - Could make communicating images easier (and images carry lots of information)

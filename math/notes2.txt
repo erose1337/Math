@@ -2597,3 +2597,633 @@ e * F(k, l) = e/k + e/l
 
 E(k, m) -> c = 1/k + 1/(k + m) = k + k + m / k(k + m)
 D(k, c) -> m = 1/(c - 1/k) - k
+
+
+
+
+add positive/negative coefficient choice to autoproduct
+
+    F(M, x) . x = sum (s[i] * Mx[i] * x[i])
+        where:
+            M is a square matrix
+                - random permutation
+                    - random "permutation" with small random scalars per row
+                - random invertible matrix
+            x is a vector
+            s is a vector with elements in the set (1, -1)
+                - indicates the sign (positive/negative) for each place
+
+adds n bits of uncertainty, where n is the dimension of the vector or matrix rows/columns
+amount of uncertainty present in random permutation variant:
+
+    n! * 2^n
+
+
+
+
+c = e(xr + 1/m) = exr + e/m        for x=n^2 and 1/m is mod n
+
+2c = 2e(xr + 1/m) = 2exr + 2e/m
+2c / e = 2(xr + 1/m) = 2xr + 2/m
+(2c / e) mod x = 2/m      if 2/m < n
+
+
+
+
+
+
+
+
+
+
+(er + m)^-1 mod P
+
+where:
+
+    secret:
+        secret prime P
+        e, r are uniformly random ~sqrt(P)
+    public:
+        m < x
+        er + m < P
+
+
+(1/er + m) + (1/er + m) = er + m + er + m = 2(er + m)
+                         ----------------- -----------
+                          (er + m)(er + m)   (er + m)^2
+
+
+(1/er + m)(1/er + m) = 1/x * 1/x = 1/x^2 = 1/(er + m)(er + m) = (er)^2 + 2erm + m^2
+
+
+
+
+ax^2 + by = c     agcd-style symmetric cipher
+                  plus autoproduct
+
+
+powers of x for the vector in the autoproduct
+
+    x^(a + b) + x^(c - d) + ...
+
+
+
+
+if x is prime and x + 2 is prime, then x + 1 = 6n
+
+
+a^2 = 24b + 1             for prime a >= 5
+a^2 - 1 = 0 mod 24
+
+(x + 2)^2 - 1 = 0 mod 24
+xx + 4x + 4 - 1 = 0 mod 24
+xx + 4x + 3 = 0 mod 24
+xx + 4x = 21 mod 24
+
+
+x     = sqrt(24b + 1)
+x + 2 = sqrt(24c + 1)
+
+
+
+x^2 + 1 = (x + i)(x - i)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Autoproduct based cipher
+
+Data
+----
+
+- Fixed secret signed permutation matrix `K`
+    - Inverse matrix `I`
+- Fixed vector `g`
+- Mostly random vector `v`
+    - The last coefficient is non-random
+        - It is equal to the message minus the sum of the other coefficients
+- Plaintext integer `m`
+- Public prime modulus `P`
+
+Operators
+---------
+- `Kv` indicates the product of the matrix `K` with the vector `v`
+- `v . g` indicates the dot product between the vectors `v` and `g`
+
+Encrypt
+-------
+Find a random vector `v` such that
+
+        Kv . g = m  mod P
+
+And output `v` as the ciphertext.
+
+How to find such a `v`
+----------------------
+Rewrite:
+
+        Kv . g = m
+
+as:
+
+        v' . g = m
+
+
+How to generate v'?
+
+- Pick random `v''` of length `len(v') - 1`. Augment `v''` with a final coefficient `(m - v'' . g[:-1]) / g[-1]`
+
+How to turn `v'` into `v`?
+
+        v' = Kv
+        Iv' = IKv = v
+
+
+Costs
+-----
+Ciphertexts require `n * log(P)` bits of space.
+
+
+
+
+
+Cantors diagonal method and the Missing Vector Problem
+------------------------------------------------------
+Given a set of n dimensional vectors:
+
+    - Partition the set into |set| / n square matrices
+    - Use the diagonal method on each matrix to obtain an n-dimensional vector that is not an element of the matrix
+    - Check if the vector is a vector in the lattice
+
+
+
+
+
+
+
+  1
+----- + e  = (k + r)^-1 + e = c
+k + r
+
+           k
+k * c = ------- + ke
+         k + r
+
+
+(k + r) = (sqrt(k) + sqrt(r)i) * (sqrt(k) - sqrt(r)i)
+        = k - sqrt(kr)i + sqrt(kr)i - ri^2
+        = k + r
+
+
+
+3 = 2^1.5
+
+There are 3^n possible vectors of length n with coefficients in (-1, 0, 1)
+There are 3^(n^2) possible n-dimensional matrices consisting of such vectors
+
+
+
+(s * a) . b = s * (a . b) = a . (s * b)
+
+Guess:
+
+    For a scalar s = a . b, if x | s, then x | a_i for all a_i in a
+                                        or x | b_i for all b_i in b
+
+clearly untrue in general:
+    - suppose a and b both consist of prime numbers
+    - a . b is a integer scalar and must have a factorization
+        - factors of that scalar cannot divide every element of such vectors because they are necessarily coprime
+    - The factors of the scalar are hidden among the factors of the output of the dot product
+        - The factors of s are hidden among the factors of a . b
+
+But there do exist vectors where this relation holds. Constructing one is trivial.
+
+
+
+
+
+
+Water slingshot
+========================================
+
+Basic concept
+-------------
+Fill a deep basin with water.
+Invert a cup or bowl so that the hole faces down, towards the water.
+Push the inverted vessel straight downwards into the water.
+Upon release, the air trapped in the vessel will force it to shoot towards the surface.
+
+Larger scale
+------------
+Construct a tunnel to the floor of a large body of water
+
+    - The ceiling of (part of) the tunnel is the floor of the body of water
+
+Construct a vessel launching facility
+
+    - Construct a space suitable for the preparation and launching of vessels
+
+Launch mechanism:
+
+    - Construct a vertical pipe with sealed ends through to the floor
+    - Insert vessel into pipe from the underground launching facility
+    - Seal pipe ends
+    - Pump pressurized gas into vessel
+    - Open pipe end that is exposed to the water
+        - pipe will fill with water
+    - If the effect works as advertised, then the gas in the vessel will force it to shoot towards the water surface.
+
+
+
+
+Solving autoproducts implies ability to solve subset sum problems
+=================================================================
+    - F(K, g) -> x
+        - (square) Matrix K (various forms) of dimensions NxN
+        - vector g of dimension N
+        - scalar x
+
+Subset sum problem
+------------------
+Given:
+
+    - a scalar y
+    - a vector of integers S
+    - an autoproduct solving oracle O
+        - given a scalar x and (implicitly) a vector g, outputs a matrix K (of suitable form) in polynomial time
+
+find the binary vector b such that:
+
+        S . b = y
+
+Solution:
+
+    - For each coefficient s in S, invoke the oracle O on s to obtain some K'. Create a list of these matrices (a tensor)
+        - Denote this list of matrices as T
+    - Invoke the oracle on y to obtain Y
+        - Y is an NxN matrix that is a subset sum of the coefficient matrices (the K' in the table)
+        - The solution vector is the same solution vector from the initial problem
+        - Each coefficient of Y Y_ij is a subset sum of coefficients from the entries of T matrices.
+
+            Y_ij = sum(K'_ij for each K in T)
+
+    - Each coefficient of Y coupled with T provides additional independent equations with the same solution vector.
+        - Results in NxN (N^2) additional equations
+    - Set oracle to target a matrix of size N = sqrt(|S|)
+
+
+
+from https://www.youtube.com/watch?v=3gjJDuCAEQQ&list=UUpCSAcbqs-sjEVfk_hMfY9w&index=7 :
+
+> ... the magnitude plot tells you how large the areas are ... when put through the pythagorean theorem
+> ... the phase plot ... tells you relatively how big one area is compared to the other, as well as if either of them are negative.
+> Fourier transform scans for sinusoidals, the Laplace transform scans for exponentials
+
+
+
+
+
+
+
+
+Autoproduct-like function that only requires group homomorphism
+===============================================================
+
+    F(v: vector, s: scalar): (v_i * s) + (v_j * s^2) + ... + (v_n * s^k)
+
+
+Random Sequence Problem
+=======================
+Given:
+    A: vector (of dimension n)
+    q: modulus
+and
+    A . PS mod Q
+with:
+    P: random permutation matrix (of dimension n)
+    S: vector of the form s^1, ..., s^(n + 1) (for s uniformly random in q)
+Output s
+
+Applications
+============
+The homomorphism in each case is a group homomorphism.
+- "weak" Homomorphic Hashing
+    - "weak" means it is strong for randomly chosen inputs
+- Homomorphic MAC
+    - Verifiable computation
+- Digital Signature
+- Homomorphic (symmetric) encryption
+- Key Encapsulation/Public-key encryption
+
+Digital Signatures from Homomorphic Hashing
+===========================================
+Public Information:
+- a weak hash function `F` such that:
+        F(a) + F(b) = F(a + b)
+
+Key Generation:
+- Private key: A tuple of `k` random inputs suitable for `F`
+- Public key: A tuple of `F(x)` for each `x` in the private key
+
+Sign:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+How to programmatically enforce good coding habits
+==================================================
+Raise an error if any metadata is missing
+    - What information?
+        - author
+        - license
+        - date created
+        - documentation
+Raise an error if unit tests were not found for items declared in the API
+Require the programmer to provide a reason (commit message) *before* opening a tracked file for editing
+
+
+
+
+
+the zeros of euler's totient function:
+
+    1 = 1!
+    2 = 2!
+
+For those sensing a pattern, the pattern does not appear to continue:
+
+    phi(3!) = phi(2 * 3) = (2 - 1) * (3 - 1) = 1 * 2 = 2
+              phi(pq)    = (p - 1) * (q - 1)
+
+
+
+"sequence fishing"
+Given:
+
+    x
+    y = ax^0 + bx^1 + ... + cx^n mod p
+
+output a, b, ..., c
+
+equivalently, given:
+
+    polynomial X (x^0, x^1, ..., x^n)
+    y = A . X
+
+output A
+
+
+
+
+
+
+
+
+
+
+
+
+
+pq = p * (p - k)
+   = p^2 - pk
+
+p^2 = 24x + 1
+
+pq = 24x + 1 - pk
+pq - 1 = 24x - pk
+
+
+7 * 5 = 7 * (7 - 5)
+      = 49 - (7 * 2) = 49 - 14 = 35
+
+34 = 24x - (7 * 2) = 48 - 14   # x = 2
+
+pq - 1 = 24x - pk
+    z  = ax - by
+
+Given:
+
+- `z = ax - by`
+- `a = 24`
+- `y = (p - k)` is a multiple of 2
+    - `y`
+
+Output `b`
+
+
+
+
+can get `by mod 24x` for arbitrary `x`
+
+
+
+n          = pq
+n          = pp - p(p - q)
+n          = pp - py
+n          = 24x + 1 - py
+n - 1      = 24x - py
+
+`x, p, y` are all unknowns.
+But one can guess at `y`.
+
+- try all `y` (integers) in increasing order
+- try randomly sampled `y`
+- guess prime factors of `y`
+    - z is a factor of 1/z numbers
+    - i.e. probability of 2 being a factor of `y` is 1/2, probability of 3 being 1/3, etc
+
+Denoting the guess as `y'`:
+
+n - 1      = 24x - pey'
+
+The `p` term accrues extra unknown factors `e`, which are those factors that were not guessed.
+Now there are two knowns, `24, y`.
+Linearize `pe` into `p'` and there two unknowns, `x, p'`.
+
+
+
+
+n          = pq
+n^2        = p^2 q^2
+           = (24x + 1)(24y + 1)
+           = 576xy + 24x + 24y + 1
+n^2 - 1    = 576xy + 24(x + y)
+(n^2 - 1)
+---------  = 24xy + x + y
+   24
+
+x + y mod 24
+
+
+n          = pq
+n^3        = n^2 * n
+           = (24x + 1)(24y + 1)(24x + 1 - pk)
+           = (576xy + 24(x + y) + 1)(24x + 1 - pk)
+           = 13824xxy + 576xy - 576xypk + 576x(x + y) + 24(x + y) - 24pk(x + y) + 24x + 1 - pk
+
+n          = pq
+n^4        = n^2 * n^2
+           = (24x + 1)(24y + 1)(24x + 1)(24y + 1)
+           = (576xy + 24(x + y) + 1)(576xy + 24(x + y) + 1)
+           =
+
+
+
+
+
+
+
+Given some topological object (e.g. a lumpy potato)...
+Assuming 2d for simplicity:
+
+    - start with drawing of a circle
+    - use edge select tool to select the edge of the circle
+        - Inside the edge is the space occupied by the object
+    - invert the selection
+        - Select the space outside of the object
+        - Color the object and inverse space e.g. black and white, respectively
+
+With this inverted view, re-examine basic topological transformations from the perspective of the space rather than of the object
+
+
+
+
+
+
+
+Finite differences and filtering out small terms from polynomials
+=================================================================
+Recall:
+
+e(x) -> x
+
+1, 2, 3
+2 - 1, 3 - 2 = 1, 1                             first order difference = degree!
+                                                     second order difference = 0
+
+f(x) -> x^2
+
+
+f(1), f(2), ...
+1, 4, 9, 16
+4 - 1, 9 - 4, 16 - 9 = 3, 5, 7                            first order difference
+5 - 3, 7 - 5 = 2, 2                            second order difference = degree!
+                                                      third order difference = 0
+g(x) -> x^3
+
+g(1), g(2), ...
+1, 8, 27, 64, 125
+
+8 - 1, 27 - 8, 64 - 27, 125 - 64 = 7, 19, 37, 61          first order difference
+
+19 - 7, 37 - 19, 61 - 37 = 12, 18, 24                    second order difference
+
+18 - 12, 24 - 18 = 6, 6                         third order difference = degree!
+                                                     fourth order difference = 0
+
+Consider:
+
+h(x) -> x^2 + x^3
+
+h(1), h(2), ...
+
+2, 12, 36, 80, 150
+
+12 - 2, 36 - 12, 80 - 36, 150 - 80 = 10, 24, 44, 70       first order difference
+
+24 - 10, 44 - 24, 70 - 44 = 14, 20, 26                   second order difference
+
+20 - 14, 26 - 20 = 6, 6                         third order difference = degree!
+                                                     fourth order difference = 0
+
+The x^2 terms are zeroed by the time the third order difference is arrived at.
+
+1 + 1, 4 + 8, 9 + 27, 16 + 64, 25 + 125
+
+12 - 2 = (8 + 4) - (1 + 1) = 8 + 4 - 1 - 1 = 8 - 1 + 4 - 1
+
+
+Can use Nth order differences to eliminate terms of degree N - 1
+
+
+i(x, y) -> x^2 + y^2
+
+i(1, 5), i(2, 6), i(3, 7), i(4, 8) = 1^2 + 5^2, 2^2 + 6^2, 3^2 + 7^2, 4^2 + 8^2
+                                   = 1 + 25, 4 + 36, 9 + 49, 16 + 64
+                                   = 26, 40, 58, 80
+40 - 26, 58 - 40, 80 - 58 = 14, 18, 22                    first order difference
+18 - 14, 22 - 18 = 4, 4           second order difference (notice it != degree!)
+                                                      third order difference = 0
+
+Can filter out multiple terms of a given degree simultaneously
+
+
+
+
+
+
+
+
+    V = a, b, ..., k                                                    a vector
+
+        |a 0 ... 0|
+    M = |0 b ... 0|
+        |0 0 ... k|
+
+    V is a linear combination of the rows of M
+
+
+    N = x, Y, ..., z
+    V . N = ax + by + ... + kz
+
+
+
+
+
+
+
+
+
+Random pass-sentence generator
+==============================
+Instead of choosing from a set of words
+
+- Choose a sentence structure (e.g. noun adjective verb)
+- For each component, select a random entry from the corresponding list
+    - If the component is a noun, then sample from a list of random nouns
+    - If the component is a verb, then sample from a list of random verbs
+    - etc
+- Populate the lists with potentially humorous combinations of entries
+    - A funny sentence may be easier to remember
+
+
+
+
+subject action subject condition
+(detail detail subject) (detail action) (detail subject) (detail condition)
